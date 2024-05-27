@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/css/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="min-h-screen flex flex-col">
+    <div class="bg-red-600 text-white w-auto h-24 flex items-center justify-between px-20 gap-2"> <!--header-->
+        <a>
+            <div class="flex-shrink-0 cursor-pointer">
+                <img src="../static/assets/le-Bruine-logo.png">
+            </div>
+        </a>
+        <div class="flex items-center">
+            <input type="text" placeholder="Busque por restaurante, comida, cidade..."
+                class="w-96 h-12 bg-white text-black text-base px-2 mr-4 rounded-md focus:outline-none"
+                id="searchBar" />
+            <button
+                class="w-16 h-12 bg-red-800 rounded-md cursor-pointer hover:bg-red-900 flex justify-center items-center">
+                <img src="../static/assets/lupa.svg">
+            </button>
+        </div>
+        <div class="flex gap-4">
+            <a href="cadastro.html">
+            <div
+                class=" text-red-600 font-semibold w-auto p-3 h-12 flex justify-center  bg-white rounded-md border-2 cursor-pointer border-transparent hover:text-white hover:bg-red-600 hover:border-white items-center">
+                Criar conta</div>
+            </a>
+            <a href="login.html">
+            <div
+                class=" text-white font-semibold w-auto p-3 h-12 flex justify-center border-white border-2 cursor-pointer bg-red-600 rounded-md hover:text-red-600 hover:bg-white hover:border-white items-center">
+                Entrar</div>
+            </a>
+        </div>
+    </div> <!--Fim do header-->
+
+    <div class="flex flex-wrap justify-center mt-6"> <!--Carrossel-->
+        <a href="#">
+            <div class="relative w-80 h-52 rounded-lg overflow-hidden m-2">
+                <img src="../static/assets/hamburger.png" />
+                <div
+                    class="absolute inset-0 flex items-center justify-center text-white text-2xl font-bold bg-black bg-opacity-70 hover:bg-opacity-20">
+                    <span>Hamburger</span>
+                </div>
+            </div>
+        </a>
+        <a href="#">
+            <div class="relative w-80 h-52 rounded-lg overflow-hidden m-2">
+                <img src="../static/assets/sushi.png" />
+                <div
+                    class="absolute inset-0 flex items-center justify-center text-white text-2xl font-bold bg-black bg-opacity-70 hover:bg-opacity-20">
+                    <span>Sushi</span>
+                </div>
+            </div>
+        </a>
+        <a href="#">
+            <div class="relative w-80 h-52 rounded-lg overflow-hidden m-2">
+                <img src="../static/assets/massas.png" />
+                <div
+                    class="absolute inset-0 flex items-center justify-center text-white text-2xl font-bold bg-black bg-opacity-70 hover:bg-opacity-20">
+                    <span>Massas</span>
+                </div>
+            </div>
+        </a>
+        <a href="#">
+            <div class="relative w-80 h-52 rounded-lg overflow-hidden m-2">
+                <img src="../static/assets/pizza.png" />
+                <div
+                    class="absolute inset-0 flex items-center justify-center text-white text-2xl font-bold bg-black bg-opacity-70 hover:bg-opacity-20">
+                    <span>Pizza</span>
+                </div>
+            </div>
+        </a>
+    </div> <!--fim carrossel-->
+
+    <div class="flex flex-grow items-center justify-center"> <!--Restaurantes-->
+        <div class="inline-flex mt-6 pl-4 items-end justify-between gap-4 w-auto h-full">
+            <div class="font-sans justify-start items-baseline w-auto">
+                <div class="float-left">
+                    <h2 class="text-red-600 m-0 text-2xl font-semibold">Restaurante Dona Benta</h2>
+                    <h4 class="text-gray-500 m-auto">Rua Napoleão Bonaparte, 32, Boa Vista - Garanhuns-PE</h4>
+                </div>
+            </div>
+            <div class="align-baseline">
+                <span class="font-sans text-lg font-bold text-red-600 float-right ml-auto">(87)99909-0001</span>
+            </div>
+            <div class="m-auto">
+                <button class="w-36 h-10 bg-red-600 hover:bg-red-900 text-white rounded-md text-lg">
+                    <a href="reservar.html">Fazer Reserva</a>
+                </button>
+            </div>
+        </div>
+    </div> <!--fim restaurantes-->
+
+    <footer class="bg-red-600 mt-7 w-full text-white p-2 flex flex-col items-center">
+        <p class="text-base mb-2">Acompanhe as redes sociais do Le Bruine:</p>
+        <div class="flex items-center justify-center gap-3">
+            <a href='https://www.instagram.com/' target="blank" passHref>
+            <div class="cursor-pointer">
+                <img src="assets/instagram-ico.svg" alt="logo instagram" width={24} height={24} />
+            </div>
+            </a>
+            <a href='https://www.facebook.com/' target="blank" passHref>
+            <div class="cursor-pointer">
+                <img src="../static/assets/facebook-ico.svg"alt="logo facebook" width={24} height={24} />
+            </div>
+            </a>
+        </div>
+        <p class="text-base my-2">Rua Francisco Carraca de Freitas, 270, Boa Vista, Garanhuns-PE</p>
+        <p class="text-base">Le Bruine © 2024 - Todos os direitos reservados / Desenvolvido por: F.A Soluções Tecnológicas - Yuri Baruk Freitas | Thiago Anízio Miranda</p>
+    </footer>
+</body>
+
+</html>
