@@ -12,7 +12,8 @@
 </head>
 
 <body class="min-h-screen flex flex-col">
-    <div class="bg-red-600 text-white w-auto h-24 flex items-center justify-between px-20 gap-2"> <!--header-->
+    <div class="bg-red-600 text-white w-auto h-24 flex items-center justify-between px-20 gap-2">
+        <!--header-->
         <a href="/">
             <div class="flex-shrink-0 cursor-pointer">
                 <img src="../static/assets/le-Bruine-logo.png">
@@ -29,14 +30,14 @@
         </div>
         <div class="flex gap-4">
             <a href="cadastro">
-            <div
-                class=" text-red-600 font-semibold w-auto p-3 h-12 flex justify-center  bg-white rounded-md border-2 cursor-pointer border-transparent hover:text-white hover:bg-red-600 hover:border-white items-center">
-                Criar conta</div>
+                <div
+                    class=" text-red-600 font-semibold w-auto p-3 h-12 flex justify-center  bg-white rounded-md border-2 cursor-pointer border-transparent hover:text-white hover:bg-red-600 hover:border-white items-center">
+                    Criar conta</div>
             </a>
             <a href="login">
-            <div
-                class=" text-white font-semibold w-auto p-3 h-12 flex justify-center border-white border-2 cursor-pointer bg-red-600 rounded-md hover:text-red-600 hover:bg-white hover:border-white items-center">
-                Entrar</div>
+                <div
+                    class=" text-white font-semibold w-auto p-3 h-12 flex justify-center border-white border-2 cursor-pointer bg-red-600 rounded-md hover:text-red-600 hover:bg-white hover:border-white items-center">
+                    Entrar</div>
             </a>
         </div>
     </div> <!--Fim do header-->
@@ -45,15 +46,15 @@
         <div class="flex flex-col justify-center items-center gap-4">
             <img class="w-96 h-64" src="../static/assets/reserva-concluida.png" alt="">
             <p class="font-semibold text-4xl text-red-600">Sua reserva foi agendada!</p>
-            <p class="w-auto ml-96 mr-96 font-normal text-lg text-red-600 justify-center">Olá <b>usuário</b>, sua reserva no restaurante <b>Nome restaurante</b> foi concluída,
+            <p class="w-auto ml-96 mr-96 font-normal text-lg text-red-600 justify-center">Olá <b>{{ reserva.nome_cliente }}</b>, sua reserva no restaurante <b>{{ reserva.nome_restaurante }}</b> foi concluída,
                 confira abaixo os dados informados, você pode editar ou cancelar
                 sua reserva a qualquer momento</p>
             <div class="w-auto h-auto px-6 py-4 border-solid border-2 rounded-2xl border-red-600 gap-2">
-                <p class="font-medium text-red-600 text-lg">Nome: <span class="font-medium text-red-600 text-lg">usuário</span></p>
-                <p class="font-medium text-red-600 text-lg">Data: <span class="font-medium text-red-600 text-lg">14/05/2024</span></p>
-                <p class="font-medium text-red-600 text-lg">Mesa para: <span class="font-medium text-red-600 text-lg">2 pessoas</span></p>
-                <p class="font-medium text-red-600 text-lg">Número para contato: <span class="font-medium text-red-600 text-lg">(81)98767-0988</span></p>
-                <p class="font-medium text-red-600 text-lg">Número da reserva: <span class="font-medium text-red-600 text-lg">#198772</span></p>
+                <p class="font-medium text-red-600 text-lg">Nome: <span class="font-medium text-red-600 text-lg">{{ reserva.nome_cliente }}</span></p>
+                <p class="font-medium text-red-600 text-lg">Data: <span class="font-medium text-red-600 text-lg">{{ reserva.data_reserva.strftime('%d/%m/%Y %H:%M') }}</span></p>
+                <p class="font-medium text-red-600 text-lg">Mesa para: <span class="font-medium text-red-600 text-lg">{{ reserva.numero_pessoas }} pessoas</span></p>
+                <p class="font-medium text-red-600 text-lg">Número para contato: <span class="font-medium text-red-600 text-lg">{{ reserva.cliente.telefone }}</span></p>
+                <p class="font-medium text-red-600 text-lg">Número da reserva: <span class="font-medium text-red-600 text-lg">#{{ reserva.id }}</span></p>
                 <div class="w-full flex justify-center items-center gap-2 mt-4">
                     <button class="bg-white text-red-600 border border-solid rounded-lg border-red-600 p-2">Editar</button>
                     <button class="bg-red-600 border-2 text-white p-2 rounded-lg">Cancelar</button>
@@ -66,14 +67,14 @@
         <p class="text-base mb-2">Acompanhe as redes sociais do Le Bruine:</p>
         <div class="flex items-center justify-center gap-3">
             <a href='https://www.instagram.com/' target="blank" passHref>
-            <div class="cursor-pointer">
-                <img src="../static/assets/instagram-ico.svg" alt="logo instagram" width={24} height={24} />
-            </div>
+                <div class="cursor-pointer">
+                    <img src="../static/assets/instagram-ico.svg" alt="logo instagram" width={24} height={24} />
+                </div>
             </a>
             <a href='https://www.facebook.com/' target="blank" passHref>
-            <div class="cursor-pointer">
-                <img src="../static/assets/facebook-ico.svg"alt="logo facebook" width={24} height={24} />
-            </div>
+                <div class="cursor-pointer">
+                    <img src="../static/assets/facebook-ico.svg" alt="logo facebook" width={24} height={24} />
+                </div>
             </a>
         </div>
         <p class="text-base my-2">Rua Francisco Carraca de Freitas, 270, Boa Vista, Garanhuns-PE</p>

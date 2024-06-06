@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from config import Config
@@ -32,6 +32,8 @@ class Reserva(db.Model):
     data_reserva = db.Column(db.DateTime, nullable=False)
     tamanho_mesa = db.Column(db.Integer, nullable=False)
     numero_pessoas = db.Column(db.Integer, nullable=False)
+    nome_cliente = db.Column(db.String(255), nullable=False)  # Novo campo para o nome do cliente
+    nome_restaurante = db.Column(db.String(255), nullable=False)  # Novo campo para o nome do restaurante
 
     cliente = db.relationship('Cliente', backref=db.backref('reservas', lazy=True))
     restaurante = db.relationship('Restaurante', backref=db.backref('reservas', lazy=True))
@@ -49,6 +51,7 @@ def login():
         cliente = Cliente.query.filter_by(email=email).first()
 
         if cliente and check_password_hash(cliente.senha, senha):
+            session['cliente_id'] = cliente.id  # Armazena o ID do cliente na sessão
             flash('Login realizado com sucesso!', 'success')
             return redirect(url_for('index'))
         else:
@@ -56,14 +59,26 @@ def login():
     
     return render_template("login.html")
 
-@app.route("/reservaConcluida")
-def reservaConcluida():
-    return render_template("reservaConcluida.html")
+@app.route("/logout")
+def logout():
+    session.pop('cliente_id', None)  # Remove o cliente da sessão
+    flash('Você saiu da sua conta.', 'success')
+    return redirect(url_for('index'))
+
+@app.route("/reservaConcluida/<int:reserva_id>")
+def reservaConcluida(reserva_id):
+    reserva = Reserva.query.get_or_404(reserva_id)
+    return render_template("reservaConcluida.html", reserva=reserva)
+
 
 @app.route("/reservar", methods=['GET', 'POST'])
 def reservar():
+    if 'cliente_id' not in session:
+        flash('Você precisa estar logado para fazer uma reserva.', 'danger')
+        return redirect(url_for('login'))
+
     if request.method == 'POST':
-        cliente_id = 1  # Em uma aplicação real, você pegaria o ID do cliente logado
+        cliente_id = session['cliente_id']
         restaurante_id = 1  # Vamos supor que o restaurante está fixo, no exemplo
         data_reserva_str = request.form['data_reserva']
         hora_reserva_str = request.form['hora_reserva']
@@ -72,17 +87,22 @@ def reservar():
         tamanho_mesa = request.form['tamanho_mesa']
         numero_pessoas = request.form['numero_pessoas']
 
+        cliente = Cliente.query.get(cliente_id)
+        restaurante = Restaurante.query.get(restaurante_id)
+
         nova_reserva = Reserva(
             cliente_id=cliente_id,
             restaurante_id=restaurante_id,
             data_reserva=data_reserva,
             tamanho_mesa=tamanho_mesa,
-            numero_pessoas=numero_pessoas
+            numero_pessoas=numero_pessoas,
+            nome_cliente=cliente.nome,
+            nome_restaurante=restaurante.nome
         )
         db.session.add(nova_reserva)
         db.session.commit()
 
-        return redirect(url_for('reservaConcluida'))
+        return redirect(url_for('reservaConcluida', reserva_id=nova_reserva.id))
 
     return render_template("reservar.html")
 
