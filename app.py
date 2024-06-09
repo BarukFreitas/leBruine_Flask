@@ -17,7 +17,7 @@ class Cliente(db.Model):
     nome = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
     telefone = db.Column(db.String(255), nullable=False)
-    senha = db.Column(db.String(255), nullable=False)  # Adicionando o campo senha
+    senha = db.Column(db.String(1024), nullable=False)  # Adicionando o campo senha
 
 class Restaurante(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -50,7 +50,7 @@ def login():
 
         cliente = Cliente.query.filter_by(email=email).first()
 
-        if cliente and check_password_hash(cliente.senha, senha):
+        if cliente and cliente.senha == senha:
             session['cliente_id'] = cliente.id  # Armazena o ID do cliente na sessão
             flash('Login realizado com sucesso!', 'success')
             return redirect(url_for('index'))
@@ -89,6 +89,9 @@ def reservar():
 
         cliente = Cliente.query.get(cliente_id)
         restaurante = Restaurante.query.get(restaurante_id)
+        if cliente == None or restaurante == None:
+            flash('Erro ao fazer reserva. Tente novamente mais tarde.', 'danger')
+            return redirect(url_for('index'))
 
         nova_reserva = Reserva(
             cliente_id=cliente_id,
@@ -106,7 +109,7 @@ def reservar():
 
     return render_template("reservar.html")
 
-
+import time
 @app.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
     if request.method == 'POST':
@@ -115,21 +118,22 @@ def cadastro():
         telefone = request.form['telefone']
         senha = request.form['senha']
         
-        hashed_senha = generate_password_hash(senha, method='pbkdf2:sha256')
+        # hashed_senha = generate_password_hash(senha, method='pbkdf2:sha256')
         
         novo_cliente = Cliente(
             nome=nome,
             email=email,
             telefone=telefone,
-            senha=hashed_senha
+            senha=senha
         )
-        
+        print('TUDO CERTO')
         try:
             db.session.add(novo_cliente)
             db.session.commit()
             flash('Cadastro realizado com sucesso!', 'success')
             return redirect(url_for('index'))
         except Exception as e:
+            print(f'{str(e)}')
             flash(f'Erro ao cadastrar: {str(e)}', 'danger')
     
     return render_template('cadastro.html')
