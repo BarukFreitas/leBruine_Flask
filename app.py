@@ -7,7 +7,7 @@ from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config.from_object(Config)
-app.secret_key = 'your_secret_key'  # Adicione uma chave secreta para flash messages
+app.secret_key = 'your_secret_key'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
@@ -17,13 +17,17 @@ class Cliente(db.Model):
     nome = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
     telefone = db.Column(db.String(255), nullable=False)
-    senha = db.Column(db.String(1024), nullable=False)  # Adicionando o campo senha
+    senha = db.Column(db.String(1024), nullable=False)
 
 class Restaurante(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(255), nullable=False, unique=True)
     nome = db.Column(db.String(255), nullable=False)
     telefone = db.Column(db.String(255), nullable=False)
     endereco = db.Column(db.String(255), nullable=False)
+    cnpj = db.Column(db.String(14), nullable=False)
+    segmento = db.Column(db.String(255), nullable=False)
+
 
 class Reserva(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -32,8 +36,8 @@ class Reserva(db.Model):
     data_reserva = db.Column(db.DateTime, nullable=False)
     tamanho_mesa = db.Column(db.Integer, nullable=False)
     numero_pessoas = db.Column(db.Integer, nullable=False)
-    nome_cliente = db.Column(db.String(255), nullable=False)  # Novo campo para o nome do cliente
-    nome_restaurante = db.Column(db.String(255), nullable=False)  # Novo campo para o nome do restaurante
+    nome_cliente = db.Column(db.String(255), nullable=False)
+    nome_restaurante = db.Column(db.String(255), nullable=False) 
 
     cliente = db.relationship('Cliente', backref=db.backref('reservas', lazy=True))
     restaurante = db.relationship('Restaurante', backref=db.backref('reservas', lazy=True))
@@ -51,7 +55,7 @@ def login():
         cliente = Cliente.query.filter_by(email=email).first()
 
         if cliente and cliente.senha == senha:
-            session['cliente_id'] = cliente.id  # Armazena o ID do cliente na sessão
+            session['cliente_id'] = cliente.id
             flash('Login realizado com sucesso!', 'success')
             return redirect(url_for('index'))
         else:
@@ -61,7 +65,7 @@ def login():
 
 @app.route("/logout")
 def logout():
-    session.pop('cliente_id', None)  # Remove o cliente da sessão
+    session.pop('cliente_id', None)
     flash('Você saiu da sua conta.', 'success')
     return redirect(url_for('index'))
 
@@ -79,7 +83,7 @@ def reservar():
 
     if request.method == 'POST':
         cliente_id = session['cliente_id']
-        restaurante_id = 1  # Vamos supor que o restaurante está fixo, no exemplo
+        restaurante_id = 1
         data_reserva_str = request.form['data_reserva']
         hora_reserva_str = request.form['hora_reserva']
         data_hora_reserva_str = f"{data_reserva_str} {hora_reserva_str}"
@@ -110,7 +114,7 @@ def reservar():
     return render_template("reservar.html")
 
 import time
-@app.route('/cadastro', methods=['GET', 'POST'])
+@app.route('/cadastrar_cliente', methods=['GET', 'POST'])
 def cadastro():
     if request.method == 'POST':
         nome = request.form['nome']
@@ -126,7 +130,6 @@ def cadastro():
             telefone=telefone,
             senha=senha
         )
-        print('TUDO CERTO')
         try:
             db.session.add(novo_cliente)
             db.session.commit()
@@ -136,7 +139,47 @@ def cadastro():
             print(f'{str(e)}')
             flash(f'Erro ao cadastrar: {str(e)}', 'danger')
     
-    return render_template('cadastro.html')
+    return render_template('cadastrar_cliente.html')
+
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
+
+@app.route('/encaminhamento')
+def encaminhamento():
+    return render_template('encaminhamento.html')
+
+
+@app.route('/cadastrar_restaurante', methods=['GET', 'POST'])
+def cadastrar_restaurante():
+    if request.method == 'POST':
+        nome = request.form['nome']
+        telefone = request.form['telefone']
+        endereco = request.form['endereco']
+        segmento = request.form['segmento']
+        cnpj = request.form['cnpj']
+        email = request.form['email']
+        senha = request.form['senha']
+
+        novo_restaurante = Restaurante(
+            nome=nome,
+            telefone=telefone,
+            endereco=endereco,
+            segmento=segmento,
+            cnpj=cnpj,
+            email=email
+        )
+
+        try:
+            db.session.add(novo_restaurante)
+            db.session.commit()
+            flash('Restaurante cadastrado com sucesso!', 'success')
+            return redirect(url_for('index'))
+        except Exception as e:
+            flash(f'Erro ao cadastrar: {str(e)}', 'danger')
+    
+    return render_template('cadastrar_restaurante.html')
+
 
 if __name__ == '__main__':
     with app.app_context():

@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/css/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="min-h-screen flex flex-col">
+    <div class="bg-red-600 text-white w-auto h-24 flex items-center justify-between px-20 gap-2"> <!--header-->
+        <a href="/">
+            <div class="flex-shrink-0 cursor-pointer">
+                <img src="../static/assets/le-Bruine-logo.png">
+            </div>
+        </a>
+        <div class="flex items-center">
+            <input type="text" placeholder="Busque por restaurante, comida, cidade..."
+                class="w-96 h-12 bg-white text-black text-base px-2 mr-4 rounded-md focus:outline-none"
+                id="searchBar" />
+            <button
+                class="w-16 h-12 bg-red-800 rounded-md cursor-pointer hover:bg-red-900 flex justify-center items-center">
+                <img src="../static/assets/lupa.svg">
+            </button>
+        </div>
+        <div class="flex gap-4">
+            <a href="cadastro">
+            <div
+                class=" text-red-600 font-semibold w-auto p-3 h-12 flex justify-center  bg-white rounded-md border-2 cursor-pointer border-transparent hover:text-white hover:bg-red-600 hover:border-white items-center">
+                Criar conta</div>
+            </a>
+            <a href="login">
+            <div
+                class=" text-white font-semibold w-auto p-3 h-12 flex justify-center border-white border-2 cursor-pointer bg-red-600 rounded-md hover:text-red-600 hover:bg-white hover:border-white items-center">
+                Entrar</div>
+            </a>
+        </div>
+    </div> <!--Fim do header-->
+
+    <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center gap-24">
+            <div className="flex flex-col items-center">
+                <Image src='...' alt="empresa" className="mb-4" />
+                <a href='/cadastrar_restaurante' className="border-2 border-red-600 rounded-lg p-2 items-center justify-center pb-3 hover:bg-red-600 hover:text-white hover:border-black">Sou uma empresa</a>
+            </div>
+            <div className="flex flex-col items-center">
+                <img src='...' alt="pessoa" className="mb-4" />
+                <a href='/cadastrar_cliente' className="border-2 border-red-600 rounded-lg p-2 items-center justify-center pb-3 hover:bg-red-600 hover:text-white hover:border-black">Sou uma pessoa</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-red-600 mt-7 w-full text-white p-2 flex flex-col items-center">
+        <p class="text-base mb-2">Acompanhe as redes sociais do Le Bruine:</p>
+        <div class="flex items-center justify-center gap-3">
+            <a href='https://www.instagram.com/' target="blank">
+            <div>
+                <img src="../static/assets/instagram-ico.svg" alt="logo instagram" width={24} height={24} />
+            </div>
+            </a>
+            <a href='https://www.facebook.com/' target="blank">
+            <div class="cursor-pointer">
+                <img src="../static/assets/facebook-ico.svg"alt="logo facebook" width={24} height={24} />
+            </div>
+            </a>
+        </div>
+        <p class="text-base my-2">Rua Francisco Carraca de Freitas, 270, Boa Vista, Garanhuns-PE</p>
+        <p class="text-base">Le Bruine © 2024 - Todos os direitos reservados / Desenvolvido por: F.A Soluções Tecnológicas - Yuri Baruk Freitas | Thiago Anízio Miranda</p>
+    </footer>
+</body>
+
+</html>
