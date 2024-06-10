@@ -46,6 +46,11 @@ class Reserva(db.Model):
 def index():
     return render_template("index.html")
 
+@app.route("/cadastroEmpresa")
+def cadastroEmpresa():
+    return render_template("cadastroEmpresa.html")
+
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -145,9 +150,25 @@ def cadastro():
 def dashboard():
     return render_template('dashboard.html')
 
-@app.route('/encaminhamento')
-def encaminhamento():
-    return render_template('encaminhamento.html')
+@app.route('/cadastroEscolher')
+def cadastroEscolher():
+    return render_template('cadastroEscolher.html')
+
+@app.route('/gerenciarClientes')
+def gerenciarClientes():
+    return render_template('gerenciarClientes.html')
+
+@app.route('/gerenciarRestaurantes')
+def gerenciarRestaurantes():
+    return render_template('gerenciarRestaurantes.html')
+
+@app.route('/homeRestaurante')
+def homeRestaurante():
+    return render_template('homeRestaurante.html')
+
+@app.route('/minhasReservas')
+def minhasReservas():
+    return render_template('minhasReservas.html')
 
 
 @app.route('/cadastrar_restaurante', methods=['GET', 'POST'])

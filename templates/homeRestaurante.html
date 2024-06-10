@@ -12,24 +12,40 @@
 </head>
 
 <body class="min-h-screen flex flex-col">
-
-    <div class="flex flex-1">
-        <div class="h-screen w-80 bg-red-600 items-center flex flex-col py-4">
-            <img src="/static/assets/le-Bruine-logo.png" alt="">
-            <div class="w-full h-10 px-2 my-4">
-                <input class="bg-white w-full h-full px-4 outline-none rounded-lg" type="text" placeholder="Buscar reservas">
+    <div class="bg-red-600 text-white w-auto h-24 flex items-center justify-between px-20 gap-2"> <!--header-->
+        <a href="/">
+            <div class="flex-shrink-0 cursor-pointer">
+                <img src="/static/assets/le-Bruine-logo.png">
             </div>
-            <a class="w-full h-11 bg-red-900 flex justify-start items-center px-4 text-white" href="/dashboard">Gerenciar reservas</a>
-            <a class="w-full h-11 bg-red-600 flex justify-start items-center px-4 text-white hover:bg-red-900" href="/gerenciarRestaurantes">Gerenciar restaurantes</a>
-            <a class="w-full h-11 bg-red-600 flex justify-start items-center px-4 text-white hover:bg-red-900" href="/gerenciarClientes">Gerenciar clientes</a>
-            <a class="w-full h-auto px-4 flex justify-start items-center m-2" href="/">
-                <button class="w-14 h-8 bg-white text-red-600 rounded-md font-medium">Sair</button>
+        </a>
+        <div class="flex items-center">
+            <input type="text" placeholder="Busque por restaurante, comida, cidade..."
+                class="w-96 h-12 bg-white text-black text-base px-2 mr-4 rounded-md focus:outline-none"
+                id="searchBar" />
+            <button
+                class="w-16 h-12 bg-red-800 rounded-md cursor-pointer hover:bg-red-900 flex justify-center items-center">
+                <img src="/static/assets/lupa.svg">
+            </button>
+        </div>
+        <div class="flex gap-4">
+            <a href="/cadastro">
+            <div
+                class=" text-red-600 font-semibold w-auto p-3 h-12 flex justify-center  bg-white rounded-md border-2 cursor-pointer border-transparent hover:text-white hover:bg-red-600 hover:border-white items-center">
+                Criar conta</div>
+            </a>
+            <a href="/login">
+            <div
+                class=" text-white font-semibold w-auto p-3 h-12 flex justify-center border-white border-2 cursor-pointer bg-red-600 rounded-md hover:text-red-600 hover:bg-white hover:border-white items-center">
+                Entrar</div>
             </a>
         </div>
+    </div> <!--Fim do header-->
 
-        <div class="w-full h-full ml-6 mt-16 flex flex-wrap gap-4">
+    <div class="w-full h-full flex flex-grow flex-col">
+        <p class="font-extrabold text-red-600 text-4xl mb-4 mt-4 px-6 text-center">Bem-Vindo, Restaurante</p>
+        <div class="w-full h-full flex flex-row gap-4 px-6">
             <div class="w-96 h-auto gap-4 border-2 border-red-600 rounded-lg p-4 text-red-600 font-semibold">
-                <span class="flex items-center gap-2"><p class="mr-auto font-extrabold text-red-700">Restaurante</p><a href="#"><img src="/static/assets/icone-editar.svg" alt=""></a> <a href="#"><img src="/static/assets/icone-excluir.svg" alt=""></a></span>
+                <span class="flex items-center gap-2"><p class="mr-auto font-extrabold text-red-700">Reserva #000000</p><a href="#"><img src="/static/assets/icone-excluir.svg" alt=""></a></span>
                 <p>Nome: <span>Usuario</span></p>
                 <p>Data: <span>14/05/2024</span></p>
                 <p>Mesa para: <span>Duas pessoas</span></p>
@@ -37,7 +53,7 @@
                 <p>Número da reserva: <span>#198772</span></p>
             </div>
             <div class="w-96 h-auto gap-4 border-2 border-red-600 rounded-lg p-4 text-red-600 font-semibold">
-                <span class="flex items-center gap-2"><p class="mr-auto font-extrabold text-red-700">Restaurante</p><a href="#"><img src="/static/assets/icone-editar.svg" alt=""></a> <a href="#"><img src="/static/assets/icone-excluir.svg" alt=""></a></span>
+                <span class="flex items-center gap-2"><p class="mr-auto font-extrabold text-red-700">Reserva #000000</p><a href="#"><img src="/static/assets/icone-excluir.svg" alt=""></a></span>
                 <p>Nome: <span>Usuario</span></p>
                 <p>Data: <span>14/05/2024</span></p>
                 <p>Mesa para: <span>Duas pessoas</span></p>
@@ -45,15 +61,7 @@
                 <p>Número da reserva: <span>#198772</span></p>
             </div>
             <div class="w-96 h-auto gap-4 border-2 border-red-600 rounded-lg p-4 text-red-600 font-semibold">
-                <span class="flex items-center gap-2"><p class="mr-auto font-extrabold text-red-700">Restaurante</p><a href="#"><img src="/static/assets/icone-editar.svg" alt=""></a> <a href="#"><img src="/static/assets/icone-excluir.svg" alt=""></a></span>
-                <p>Nome: <span>Usuario</span></p>
-                <p>Data: <span>14/05/2024</span></p>
-                <p>Mesa para: <span>Duas pessoas</span></p>
-                <p>Número p/ contato: <span>(81) 98767-0988</span></p>
-                <p>Número da reserva: <span>#198772</span></p>
-            </div>
-            <div class="w-96 h-auto gap-4 border-2 border-red-600 rounded-lg p-4 text-red-600 font-semibold">
-                <span class="flex items-center gap-2"><p class="mr-auto font-extrabold text-red-700">Restaurante</p><a href="#"><img src="/static/assets/icone-editar.svg" alt=""></a> <a href="#"><img src="/static/assets/icone-excluir.svg" alt=""></a></span>
+                <span class="flex items-center gap-2"><p class="mr-auto font-extrabold text-red-700">Reserva #000000</p><a href="#"><img src="/static/assets/icone-excluir.svg" alt=""></a></span>
                 <p>Nome: <span>Usuario</span></p>
                 <p>Data: <span>14/05/2024</span></p>
                 <p>Mesa para: <span>Duas pessoas</span></p>
@@ -63,7 +71,7 @@
         </div>
     </div>
 
-    <footer class="bg-red-600 w-full text-white p-2 flex flex-col items-center">
+    <footer class="bg-red-600 mt-7 w-full text-white p-2 flex flex-col items-center">
         <p class="text-base mb-2">Acompanhe as redes sociais do Le Bruine:</p>
         <div class="flex items-center justify-center gap-3">
             <a href='https://www.instagram.com/' target="blank" passHref>
