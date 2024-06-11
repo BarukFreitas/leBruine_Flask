@@ -46,9 +46,35 @@ class Reserva(db.Model):
 def index():
     return render_template("index.html")
 
-@app.route("/cadastroEmpresa")
+@app.route("/cadastroEmpresa", methods=['GET', 'POST'])
 def cadastroEmpresa():
-    return render_template("cadastroEmpresa.html")
+    if request.method == 'POST':
+        nome = request.form['nome']
+        endereco = request.form['endereco']
+        cnpj = request.form['cnpj']
+        email = request.form['email']
+        telefone = request.form['telefone']
+        segmento = request.form['segmento']
+        senha = request.form['senha']
+
+        novo_restaurante = Restaurante(
+            nome=nome,
+            telefone=telefone,
+            endereco=endereco,
+            segmento=segmento,
+            cnpj=cnpj,
+            email=email,
+        )
+
+        try:
+            db.session.add(novo_restaurante)
+            db.session.commit()
+            flash('Restaurante cadastrado com sucesso!', 'success')
+            return redirect(url_for('index'))
+        except Exception as e:
+            flash(f'Erro ao cadastrar: {str(e)}', 'danger')
+
+    return render_template('cadastroEmpresa.html')
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -118,7 +144,6 @@ def reservar():
 
     return render_template("reservar.html")
 
-import time
 @app.route('/cadastrar_cliente', methods=['GET', 'POST'])
 def cadastro():
     if request.method == 'POST':

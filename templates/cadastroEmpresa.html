@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../static/css/output.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
         rel="stylesheet">
 </head>
 
@@ -15,15 +14,27 @@
     <div class="w-auto h-auto gap-8 absolute right-44 top-6 p-6 bg-white rounded-2xl shadow-md"> <!--formulario de login-->
         <p class="font-normal text-sm mb-4">Bem-Vindo ao <span class="text-red-600 font-bold">Lebruine</span></p>
         <p class="text-3xl font-semibold mb-4 w-full">Conta empresarial</p>
-        <div class="w-96" id="formulario">
-            <input id="nomeRestaurante" class="w-96 bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="text" placeholder="Nome do restaurante">
-            <input id="enderecoRestaurante" class="w-96 bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="text" placeholder="Endereço do restaurante">
-            <input id="cnpjRestaurante" class="w-96 bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="text" placeholder="CNPJ">
-            <input id="emailRestaurante" class="w-96 bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="email" placeholder="Insira seu e-mail">
-            <input id="numeroRestaurante" class="w-96 bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="number" placeholder="Telefone do restaurante">
-            <input id="senhaRestaurante" class="w-96 bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="password" placeholder="Senha">
-        </div>
-        <button type="button" id="cadastroCliente" class="w-full p-2 mb-5 rounded-md bg-red-600 text-white font-semibold">Cadastrar</button>
+        <form class="w-96" id="formulario" method="POST" action="/cadastrar_restaurante">
+            <input id="nomeRestaurante" name="nome" class="w-96 bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="text" placeholder="Nome do restaurante" required>
+            <input id="enderecoRestaurante" name="endereco" class="w-96 bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="text" placeholder="Endereço do restaurante" required>
+            <input id="cnpjRestaurante" name="cnpj" maxlength="14" class="w-96 bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="text" placeholder="CNPJ" required>
+            <input id="emailRestaurante" name="email" class="w-96 bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="email" placeholder="Insira seu e-mail" required>
+            <input id="numeroRestaurante" name="telefone" maxlength="11" class="w-96 bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="text" placeholder="Telefone do restaurante" required>
+            <input id="senhaRestaurante" name="senha" class="w-96 bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="password" placeholder="Senha" required>
+            <div class="flex justify-between mb-5">
+                <span class="text-red-600 font-medium text-lg">Escolha o Segmento</span>
+                <select name="segmento" id="segmento" class="w-full bg-gray-200 border-red-600 rounded-lg outline-none" required>
+                    <option value="italiana">Italiana</option>
+                    <option value="portuguesa">Portuguesa</option>
+                    <option value="japonesa">Japonesa</option>
+                    <option value="espanhola">Espanhola</option>
+                    <option value="francesa">Francesa</option>
+                    <option value="indiana">Indiana</option>
+                    <option value="regional">Regional</option>
+                </select>
+            </div>
+            <button type="submit" id="cadastroCliente" class="w-full p-2 mb-5 rounded-md bg-red-600 text-white font-semibold">Cadastrar</button>
+        </form>
         <p class="text-gray-400 font-normal">Já tem uma conta?</p>
         <a class="text-red-600 font-bold" href="/login">Faça login</a>
     </div> <!--Fim formulário de login-->
@@ -43,14 +54,14 @@
         <p class="text-base mb-2">Acompanhe as redes sociais do Le Bruine:</p>
         <div class="flex items-center justify-center gap-3">
             <a href='https://www.instagram.com/' target="blank" passHref>
-            <div class="cursor-pointer">
-                <img src="assets/instagram-ico.svg" alt="logo instagram" width={24} height={24} />
-            </div>
+                <div class="cursor-pointer">
+                    <img src="../static/assets/instagram-ico.svg" alt="logo instagram" width="24" height="24" />
+                </div>
             </a>
             <a href='https://www.facebook.com/' target="blank" passHref>
-            <div class="cursor-pointer">
-                <img src="assets/facebook-ico.svg"alt="logo facebook" width={24} height={24} />
-            </div>
+                <div class="cursor-pointer">
+                    <img src="../static/assets/facebook-ico.svg" alt="logo facebook" width="24" height="24" />
+                </div>
             </a>
         </div>
         <p class="text-base my-2">Rua Francisco Carraca de Freitas, 270, Boa Vista, Garanhuns-PE</p>
