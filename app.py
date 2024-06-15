@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import generate_password_hash, check_password_hash
 from config import Config
 from datetime import datetime
 from flask_migrate import Migrate
@@ -17,7 +16,7 @@ class Cliente(db.Model):
     nome = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
     telefone = db.Column(db.String(255), nullable=False)
-    senha = db.Column(db.String(1024), nullable=False)
+    senha = db.Column(db.String(255), nullable=False)
 
 class Restaurante(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -25,9 +24,9 @@ class Restaurante(db.Model):
     nome = db.Column(db.String(255), nullable=False)
     telefone = db.Column(db.String(255), nullable=False)
     endereco = db.Column(db.String(255), nullable=False)
-    cnpj = db.Column(db.String(14), nullable=False)
     segmento = db.Column(db.String(255), nullable=False)
-
+    cnpj = db.Column(db.String(14), nullable=False)
+    senha_hash = db.Column(db.String(255), nullable=False)
 
 class Reserva(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -42,6 +41,7 @@ class Reserva(db.Model):
     cliente = db.relationship('Cliente', backref=db.backref('reservas', lazy=True))
     restaurante = db.relationship('Restaurante', backref=db.backref('reservas', lazy=True))
 
+# Rotas
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -64,6 +64,7 @@ def cadastroEmpresa():
             segmento=segmento,
             cnpj=cnpj,
             email=email,
+            senha_hash=senha  # Armazena a senha diretamente no campo senha_hash
         )
 
         try:
@@ -75,7 +76,6 @@ def cadastroEmpresa():
             flash(f'Erro ao cadastrar: {str(e)}', 'danger')
 
     return render_template('cadastroEmpresa.html')
-
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -105,7 +105,6 @@ def reservaConcluida(reserva_id):
     reserva = Reserva.query.get_or_404(reserva_id)
     return render_template("reservaConcluida.html", reserva=reserva)
 
-
 @app.route("/reservar", methods=['GET', 'POST'])
 def reservar():
     if 'cliente_id' not in session:
@@ -114,7 +113,7 @@ def reservar():
 
     if request.method == 'POST':
         cliente_id = session['cliente_id']
-        restaurante_id = 1
+        restaurante_id = 1  # Defina o restaurante_id de acordo com a lógica de sua aplicação
         data_reserva_str = request.form['data_reserva']
         hora_reserva_str = request.form['hora_reserva']
         data_hora_reserva_str = f"{data_reserva_str} {hora_reserva_str}"
@@ -152,13 +151,11 @@ def cadastro():
         telefone = request.form['telefone']
         senha = request.form['senha']
         
-        # hashed_senha = generate_password_hash(senha, method='pbkdf2:sha256')
-        
         novo_cliente = Cliente(
             nome=nome,
             email=email,
             telefone=telefone,
-            senha=senha
+            senha=senha  # Armazena a senha diretamente no campo senha
         )
         try:
             db.session.add(novo_cliente)
@@ -195,7 +192,6 @@ def homeRestaurante():
 def minhasReservas():
     return render_template('minhasReservas.html')
 
-
 @app.route('/cadastrar_restaurante', methods=['GET', 'POST'])
 def cadastrar_restaurante():
     if request.method == 'POST':
@@ -213,7 +209,8 @@ def cadastrar_restaurante():
             endereco=endereco,
             segmento=segmento,
             cnpj=cnpj,
-            email=email
+            email=email,
+            senha_hash=senha  # Armazena a senha diretamente no campo senha_hash
         )
 
         try:
@@ -225,7 +222,6 @@ def cadastrar_restaurante():
             flash(f'Erro ao cadastrar: {str(e)}', 'danger')
     
     return render_template('cadastrar_restaurante.html')
-
 
 if __name__ == '__main__':
     with app.app_context():
