@@ -1,20 +1,20 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../static/css/output.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link href="{{ url_for('static', filename='css/output.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
         rel="stylesheet">
 </head>
 
 <body class="min-h-screen flex flex-col">
-    <div class="w-auto h-auto gap-8 absolute right-44 top-6 p-6 bg-white rounded-2xl shadow-md"> <!--formulario de login-->
+    <div class="w-auto h-auto gap-8 absolute right-44 top-6 p-6 bg-white rounded-2xl shadow-md">
         <p class="font-normal text-sm mb-4">Bem-Vindo ao <span class="text-red-600 font-bold">Lebruine</span></p>
         <p class="text-3xl font-semibold mb-4 w-full">Conta empresarial</p>
-        <form class="w-96" id="formulario" method="POST" action="/cadastrar_restaurante">
+        <form class="w-96" id="formulario" method="POST" action="/cadastroEmpresa">
             <input id="nomeRestaurante" name="nome" class="w-96 bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="text" placeholder="Nome do restaurante" required>
             <input id="enderecoRestaurante" name="endereco" class="w-96 bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="text" placeholder="Endereço do restaurante" required>
             <input id="cnpjRestaurante" name="cnpj" maxlength="14" class="w-96 bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="text" placeholder="CNPJ" required>
@@ -33,21 +33,22 @@
                     <option value="regional">Regional</option>
                 </select>
             </div>
-            <button type="submit" id="cadastroCliente" class="w-full p-2 mb-5 rounded-md bg-red-600 text-white font-semibold">Cadastrar</button>
+            <button type="submit" id="cadastroEmpresa" class="w-full p-2 mb-5 rounded-md bg-red-600 text-white font-semibold">Cadastrar</button>
         </form>
         <p class="text-gray-400 font-normal">Já tem uma conta?</p>
         <a class="text-red-600 font-bold" href="/login">Faça login</a>
-    </div> <!--Fim formulário de login-->
+    </div>
 
     <div class="bg-red-600 w-full h-80 flex gap-8">
         <div class="w-80 mt-20 ml-32">
-            <a href="/"><img src="/static/assets/le-Bruine-logo.png" alt=""></a>
+            <a href="/"><img src="{{ url_for('static', filename='assets/le-Bruine-logo.png') }}" alt=""></a>
             <h2 class="font-bold text-lg text-white">Sua reserva de um jeito fácil</h2>
             <p class="text-white text-wrap">Faça sua reserva de forma rápida e sem sair de casa, tudo de forma prática pela nossa plataforma.</p>
         </div>
-        <img class="w-72 h-72" src="/static/assets/pizza-3d-vetor.png" alt="">
+        <img class="w-72 h-72" src="{{ url_for('static', filename='assets/pizza-3d-vetor.png') }}" alt="">
     </div>
-    <img class="w-96 h-64 ml-20" src="/static/assets/imagem-bg-login-cadastro.png" alt="">
+    <img class="w-96 h-64 ml-20" src="{{ url_for('static', filename='assets/imagem-bg-login-cadastro.png') }}" alt="">
+
     <div class="flex flex-grow"></div>
 
     <footer class="bg-red-600 mt-7 w-full text-white p-2 flex flex-col items-center">
@@ -55,18 +56,19 @@
         <div class="flex items-center justify-center gap-3">
             <a href='https://www.instagram.com/' target="blank" passHref>
                 <div class="cursor-pointer">
-                    <img src="../static/assets/instagram-ico.svg" alt="logo instagram" width="24" height="24" />
+                    <img src="{{ url_for('static', filename='assets/instagram-ico.svg') }}" alt="logo instagram" width="24" height="24" />
                 </div>
             </a>
             <a href='https://www.facebook.com/' target="blank" passHref>
                 <div class="cursor-pointer">
-                    <img src="../static/assets/facebook-ico.svg" alt="logo facebook" width="24" height="24" />
+                    <img src="{{ url_for('static', filename='assets/facebook-ico.svg') }}" alt="logo facebook" width="24" height="24" />
                 </div>
             </a>
         </div>
         <p class="text-base my-2">Rua Francisco Carraca de Freitas, 270, Boa Vista, Garanhuns-PE</p>
         <p class="text-base">Le Bruine © 2024 - Todos os direitos reservados / Desenvolvido por: F.A Soluções Tecnológicas - Yuri Baruk Freitas | Thiago Anízio Miranda</p>
     </footer>
+
 </body>
 
 </html>

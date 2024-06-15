@@ -10,6 +10,9 @@ app.secret_key = 'your_secret_key'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
+# Define o caminho dos arquivos estáticos
+app.static_folder = 'static'
+
 # Modelos
 class Cliente(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -24,8 +27,8 @@ class Restaurante(db.Model):
     nome = db.Column(db.String(255), nullable=False)
     telefone = db.Column(db.String(255), nullable=False)
     endereco = db.Column(db.String(255), nullable=False)
-    segmento = db.Column(db.String(255), nullable=False)
     cnpj = db.Column(db.String(14), nullable=False)
+    segmento = db.Column(db.String(255), nullable=False)
     senha_hash = db.Column(db.String(255), nullable=False)
 
 class Reserva(db.Model):
@@ -41,10 +44,34 @@ class Reserva(db.Model):
     cliente = db.relationship('Cliente', backref=db.backref('reservas', lazy=True))
     restaurante = db.relationship('Restaurante', backref=db.backref('reservas', lazy=True))
 
-# Rotas
+
 @app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route('/cadastrar_cliente', methods=['GET', 'POST'])
+def cadastrar_cliente():
+    if request.method == 'POST':
+        nome = request.form['nome']
+        email = request.form['email']
+        telefone = request.form['telefone']
+        senha = request.form['senha']
+        
+        novo_cliente = Cliente(
+            nome=nome,
+            email=email,
+            telefone=telefone,
+            senha=senha
+        )
+        try:
+            db.session.add(novo_cliente)
+            db.session.commit()
+            flash('Cadastro realizado com sucesso!', 'success')
+            return redirect(url_for('index'))
+        except Exception as e:
+            flash(f'Erro ao cadastrar: {str(e)}', 'danger')
+    
+    return render_template('cadastrar_cliente.html')
 
 @app.route("/cadastroEmpresa", methods=['GET', 'POST'])
 def cadastroEmpresa():
@@ -64,7 +91,7 @@ def cadastroEmpresa():
             segmento=segmento,
             cnpj=cnpj,
             email=email,
-            senha_hash=senha  # Armazena a senha diretamente no campo senha_hash
+            senha_hash=senha  # Aqui atribuímos a senha diretamente ao campo senha_hash
         )
 
         try:
@@ -113,7 +140,7 @@ def reservar():
 
     if request.method == 'POST':
         cliente_id = session['cliente_id']
-        restaurante_id = 1  # Defina o restaurante_id de acordo com a lógica de sua aplicação
+        restaurante_id = 1  # Aqui você deve definir o restaurante correto
         data_reserva_str = request.form['data_reserva']
         hora_reserva_str = request.form['hora_reserva']
         data_hora_reserva_str = f"{data_reserva_str} {hora_reserva_str}"
@@ -123,7 +150,7 @@ def reservar():
 
         cliente = Cliente.query.get(cliente_id)
         restaurante = Restaurante.query.get(restaurante_id)
-        if cliente == None or restaurante == None:
+        if cliente is None or restaurante is None:
             flash('Erro ao fazer reserva. Tente novamente mais tarde.', 'danger')
             return redirect(url_for('index'))
 
@@ -142,31 +169,6 @@ def reservar():
         return redirect(url_for('reservaConcluida', reserva_id=nova_reserva.id))
 
     return render_template("reservar.html")
-
-@app.route('/cadastrar_cliente', methods=['GET', 'POST'])
-def cadastro():
-    if request.method == 'POST':
-        nome = request.form['nome']
-        email = request.form['email']
-        telefone = request.form['telefone']
-        senha = request.form['senha']
-        
-        novo_cliente = Cliente(
-            nome=nome,
-            email=email,
-            telefone=telefone,
-            senha=senha  # Armazena a senha diretamente no campo senha
-        )
-        try:
-            db.session.add(novo_cliente)
-            db.session.commit()
-            flash('Cadastro realizado com sucesso!', 'success')
-            return redirect(url_for('index'))
-        except Exception as e:
-            print(f'{str(e)}')
-            flash(f'Erro ao cadastrar: {str(e)}', 'danger')
-    
-    return render_template('cadastrar_cliente.html')
 
 @app.route('/dashboard')
 def dashboard():
@@ -191,37 +193,6 @@ def homeRestaurante():
 @app.route('/minhasReservas')
 def minhasReservas():
     return render_template('minhasReservas.html')
-
-@app.route('/cadastrar_restaurante', methods=['GET', 'POST'])
-def cadastrar_restaurante():
-    if request.method == 'POST':
-        nome = request.form['nome']
-        telefone = request.form['telefone']
-        endereco = request.form['endereco']
-        segmento = request.form['segmento']
-        cnpj = request.form['cnpj']
-        email = request.form['email']
-        senha = request.form['senha']
-
-        novo_restaurante = Restaurante(
-            nome=nome,
-            telefone=telefone,
-            endereco=endereco,
-            segmento=segmento,
-            cnpj=cnpj,
-            email=email,
-            senha_hash=senha  # Armazena a senha diretamente no campo senha_hash
-        )
-
-        try:
-            db.session.add(novo_restaurante)
-            db.session.commit()
-            flash('Restaurante cadastrado com sucesso!', 'success')
-            return redirect(url_for('index'))
-        except Exception as e:
-            flash(f'Erro ao cadastrar: {str(e)}', 'danger')
-    
-    return render_template('cadastrar_restaurante.html')
 
 if __name__ == '__main__':
     with app.app_context():
