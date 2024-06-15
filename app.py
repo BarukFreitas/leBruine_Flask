@@ -21,6 +21,7 @@ class Cliente(db.Model):
     telefone = db.Column(db.String(255), nullable=False)
     senha = db.Column(db.String(255), nullable=False)
 
+
 class Restaurante(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
@@ -68,7 +69,12 @@ def cadastrar_cliente():
             db.session.commit()
             flash('Cadastro realizado com sucesso!', 'success')
             return redirect(url_for('index'))
+            print('deu certo')
         except Exception as e:
+            db.session.rollback()  # Rollback the transaction if there's an error
+            print('erro no db session rollback')
+            app.logger.error(f'Error: {str(e)}')  # Log the error
+            print(f'Error: {str(e)}')
             flash(f'Erro ao cadastrar: {str(e)}', 'danger')
     
     return render_template('cadastrar_cliente.html')
