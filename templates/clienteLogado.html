@@ -11,7 +11,7 @@
 
 <body class="min-h-screen flex flex-col">
     <div class="bg-red-600 text-white w-auto h-24 flex items-center justify-between px-20 gap-2"> <!--header-->
-        <a>
+        <a href="/clienteLogado">
             <div class="flex-shrink-0 cursor-pointer">
                 <img src="/static/assets/le-Bruine-logo.png">
             </div>
@@ -40,7 +40,7 @@
                         <!-- Active: "bg-gray-100", Not Active: "" -->
                         <a href="/perfilUsuario" class="text-red-600 flex items-end gap-2 px-4 py-2 text-sm font-medium hover:bg-slate-100" role="menuitem" tabindex="-1" id="menu-item-0"><img src="/static/assets/minha-conta.svg" alt="">Minha conta</a>
                         <a href="/minhasReservas" class="text-red-600 flex items-end gap-2 px-4 py-2 text-sm font-medium hover:bg-slate-100" role="menuitem" tabindex="-1" id="menu-item-1"><img src="/static/assets/minhas-reservas.svg" alt="">Minhas reservas</a>
-                        <a href="/" class="text-red-600 flex items-end gap-2 px-4 py-2 text-sm font-medium hover:bg-slate-100" role="menuitem" tabindex="-1" id="menu-item-2"><img src="/static/assets/sair.svg" alt="">Sair</a>
+                        <a href="/logout" class="text-red-600 flex items-end gap-2 px-4 py-2 text-sm font-medium hover:bg-slate-100" role="menuitem" tabindex="-1" id="menu-item-2"><img src="/static/assets/sair.svg" alt="">Sair</a>
                     </div>
                 </div>
             </div>
@@ -64,41 +64,76 @@
         
     </div> <!--Fim do header-->
 
-    <div class="flex flex-wrap justify-center mt-6">
-        <!--Carrossel-->
-        <a href="#">
-            <div class="relative w-80 h-52 rounded-lg overflow-hidden m-2">
-                <img src="../static/assets/hamburger.png" />
+    <div class="flex flex-wrap justify-center mt-6"> <!--Carrossel-->
+        <a href="#" data-type="japonesa" class="food-type">
+            <div class="relative w-48 h-auto rounded-lg overflow-hidden m-2">
+                <img src="/static/assets/sushi.png" />
                 <div
-                    class="absolute inset-0 flex items-center justify-center text-white text-2xl font-bold bg-black bg-opacity-70 hover:bg-opacity-20">
-                    <span>Hamburger</span>
+                    class="absolute inset-0 flex items-center justify-center text-white text-2xl font-semibold bg-black bg-opacity-70 hover:bg-opacity-20">
+                    <span class="drop-shadow-md">Japonesa</span>
                 </div>
             </div>
         </a>
-        <a href="#">
-            <div class="relative w-80 h-52 rounded-lg overflow-hidden m-2">
-                <img src="../static/assets/sushi.png" />
+        <a href="#" data-type="espanhola" class="food-type">
+            <div class="relative w-48 h-auto rounded-lg overflow-hidden m-2">
+                <img src="/static/assets/comida-espanhola.png" />
                 <div
-                    class="absolute inset-0 flex items-center justify-center text-white text-2xl font-bold bg-black bg-opacity-70 hover:bg-opacity-20">
-                    <span>Sushi</span>
+                    class="absolute inset-0 flex items-center justify-center text-white text-2xl font-semibold bg-black bg-opacity-70 hover:bg-opacity-20">
+                    <span class="drop-shadow-md">Espanhola</span>
                 </div>
             </div>
         </a>
-        <a href="#">
-            <div class="relative w-80 h-52 rounded-lg overflow-hidden m-2">
-                <img src="../static/assets/massas.png" />
+        <a href="#" data-type="portuguesa" class="food-type">
+            <div class="relative w-48 h-auto rounded-lg overflow-hidden m-2">
+                <img src="/static/assets/comida-portuguesa.png" />
                 <div
-                    class="absolute inset-0 flex items-center justify-center text-white text-2xl font-bold bg-black bg-opacity-70 hover:bg-opacity-20">
-                    <span>Massas</span>
+                    class="absolute inset-0 flex items-center justify-center text-white text-2xl font-semibold bg-black bg-opacity-70 hover:bg-opacity-20">
+                    <span class="drop-shadow-md">Portuguesa</span>
                 </div>
             </div>
         </a>
-        <a href="#">
-            <div class="relative w-80 h-52 rounded-lg overflow-hidden m-2">
-                <img src="../static/assets/pizza.png" />
+        <a href="#" data-type="italiana" class="food-type">
+            <div class="relative w-48 h-auto rounded-lg overflow-hidden m-2">
+                <img src="/static/assets/massas.png" />
                 <div
-                    class="absolute inset-0 flex items-center justify-center text-white text-2xl font-bold bg-black bg-opacity-70 hover:bg-opacity-20">
-                    <span>Pizza</span>
+                    class="absolute inset-0 flex items-center justify-center text-white text-2xl font-semibold bg-black bg-opacity-70 hover:bg-opacity-20">
+                    <span class="drop-shadow-md">Italiana</span>
+                </div>
+            </div>
+        </a>
+        <a href="#" data-type="francesa" class="food-type">
+            <div class="relative w-48 h-auto rounded-lg overflow-hidden m-2">
+                <img src="/static/assets/comida-francesa.png" />
+                <div
+                    class="absolute inset-0 flex items-center justify-center text-white text-2xl font-semibold bg-black bg-opacity-70 hover:bg-opacity-20">
+                    <span class="drop-shadow-md">Francesa</span>
+                </div>
+            </div>
+        </a>
+        <a href="#" data-type="indiana" class="food-type">
+            <div class="relative w-48 h-auto rounded-lg overflow-hidden m-2">
+                <img src="/static/assets/comida-indiana.png" />
+                <div
+                    class="absolute inset-0 flex items-center justify-center text-white text-2xl font-semibold bg-black bg-opacity-70 hover:bg-opacity-20">
+                    <span class="drop-shadow-md">Indiana</span>
+                </div>
+            </div>
+        </a>
+        <a href="#" data-type="regional" class="food-type">
+            <div class="relative w-48 h-auto rounded-lg overflow-hidden m-2">
+                <img src="/static/assets/comida-regional.png" />
+                <div
+                    class="absolute inset-0 flex items-center justify-center text-white text-2xl font-semibold bg-black bg-opacity-70 hover:bg-opacity-20">
+                    <span class="drop-shadow-md">Regional</span>
+                </div>
+            </div>
+        </a>
+        <a href="#" data-type="todos" class="food-type">
+            <div class="relative w-48 h-auto rounded-lg overflow-hidden m-2">
+                <img src="/static/assets/todos-os-pratos.jpg" />
+                <div
+                    class="absolute inset-0 flex items-center justify-center text-white text-2xl font-semibold bg-black bg-opacity-70 hover:bg-opacity-20">
+                    <span class="drop-shadow-md">Todos</span>
                 </div>
             </div>
         </a>
@@ -107,16 +142,16 @@
     <div class="flex flex-grow flex-wrap items-center justify-center gap-4 mx-6">
         <!-- Restaurantes -->
         {% for restaurante, imagem in restaurantes %}
-        <div id="restaurante-{{ restaurante.id }}" class="w-auto flex gap-4 items-center rounded-2xl hover:bg-slate-100 hover:shadow-lg hover:cursor-pointer p-6 restaurant-item">
+        <div id="restaurante-{{ restaurante.id }}" class="w-auto flex gap-4 items-center rounded-2xl hover:bg-slate-100 hover:shadow-lg hover:cursor-pointer p-6 restaurant-item" data-type="{{ restaurante.segmento }}">
             <img class="w-32 h-32 rounded-xl" src="{{ imagem }}" alt="Imagem do Restaurante">
             <div class="w-80">
                 <p class="font-bold text-red-600 text-xl restaurant-name">{{ restaurante.nome }}</p>
                 <p class="font-normal text-gray-400 text-wrap text-sm endereco-restaurante">{{ restaurante.endereco }}</p>
                 <p class="font-bold text-base text-red-600">{{ restaurante.telefone }}</p>
-                <a href="/reservar/{{ restaurante.id }}" class="w-36 bg-red-600 font-semibold text-sm rounded-lg text-white flex flex-row gap-1 h-8 items-center px-2">Fazer reserva<img src="/static/assets/check-button.svg" alt="Check"></a>
+                <a href="/reservar/{{ restaurante.id }}" class="w-36 bg-red-600 font-semibold text-sm rounded-lg text-white flex flex-row gap-1 h-8 items-center px-2">Fazer reserva<img src="../static/assets/check-button.svg" alt="Check"></a>
             </div>
         </div>
-        {% endfor %}
+        {% endfor %}   
     </div>
 
     <footer class="bg-red-600 mt-7 w-full text-white p-2 flex flex-col items-center">
@@ -155,6 +190,29 @@
         }
 
         document.getElementById('searchBar').addEventListener('input', searchRestaurants);
+
+        document.querySelectorAll('.food-type').forEach(typeDiv => {
+            typeDiv.addEventListener('click', () => {
+                const type = typeDiv.getAttribute('data-type');
+                const restaurants = document.querySelectorAll('.restaurant-item');
+                
+                restaurants.forEach(restaurant => {
+                    const restaurantType = restaurant.getAttribute('data-type');
+                    
+                    if (type === 'todos' || restaurantType === type) {
+                        restaurant.style.display = 'flex';
+                    } else {
+                        restaurant.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        const mensagem = "{{ mensagem }}";
+        if (mensagem && mensagem !== "") {
+            alert(mensagem);
+        }
     </script>
 </body>
 

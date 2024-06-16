@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../static/css/output.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
 </head>
 
@@ -28,38 +27,20 @@
         </div>
 
         <div class="w-full h-full ml-6 mt-16 flex flex-wrap gap-4">
+            {% for reserva in reservas %}
             <div class="w-96 h-auto gap-4 border-2 border-red-600 rounded-lg p-4 text-red-600 font-semibold">
-                <span class="flex items-center gap-2"><p class="mr-auto font-extrabold text-red-700">Restaurante</p><a href="#"><img src="/static/assets/icone-editar.svg" alt=""></a> <a href="#"><img src="/static/assets/icone-excluir.svg" alt=""></a></span>
-                <p>Nome: <span>Usuario</span></p>
-                <p>Data: <span>14/05/2024</span></p>
-                <p>Mesa para: <span>Duas pessoas</span></p>
-                <p>Número p/ contato: <span>(81) 98767-0988</span></p>
-                <p>Número da reserva: <span>#198772</span></p>
+                <span class="flex items-center gap-2">
+                    <p class="mr-auto font-extrabold text-red-700">Restaurante: {{ reserva.nome_restaurante }}</p>
+                    <a href="#"><img src="/static/assets/icone-editar.svg" alt=""></a>
+                    <a href="#"><img src="/static/assets/icone-excluir.svg" alt=""></a>
+                </span>
+                <p>Nome: <span>{{ reserva.nome_cliente }}</span></p>
+                <p>Data: <span>{{ reserva.data_reserva.strftime('%d/%m/%Y') }}</span></p>
+                <p>Mesa para: <span>{{ reserva.tamanho_mesa }}</span></p>
+                <p>Número p/ contato: <span>{{ reserva.cliente.telefone }}</span></p>
+                <p>Número da reserva: <span>#{{ reserva.id }}</span></p>
             </div>
-            <div class="w-96 h-auto gap-4 border-2 border-red-600 rounded-lg p-4 text-red-600 font-semibold">
-                <span class="flex items-center gap-2"><p class="mr-auto font-extrabold text-red-700">Restaurante</p><a href="#"><img src="/static/assets/icone-editar.svg" alt=""></a> <a href="#"><img src="/static/assets/icone-excluir.svg" alt=""></a></span>
-                <p>Nome: <span>Usuario</span></p>
-                <p>Data: <span>14/05/2024</span></p>
-                <p>Mesa para: <span>Duas pessoas</span></p>
-                <p>Número p/ contato: <span>(81) 98767-0988</span></p>
-                <p>Número da reserva: <span>#198772</span></p>
-            </div>
-            <div class="w-96 h-auto gap-4 border-2 border-red-600 rounded-lg p-4 text-red-600 font-semibold">
-                <span class="flex items-center gap-2"><p class="mr-auto font-extrabold text-red-700">Restaurante</p><a href="#"><img src="/static/assets/icone-editar.svg" alt=""></a> <a href="#"><img src="/static/assets/icone-excluir.svg" alt=""></a></span>
-                <p>Nome: <span>Usuario</span></p>
-                <p>Data: <span>14/05/2024</span></p>
-                <p>Mesa para: <span>Duas pessoas</span></p>
-                <p>Número p/ contato: <span>(81) 98767-0988</span></p>
-                <p>Número da reserva: <span>#198772</span></p>
-            </div>
-            <div class="w-96 h-auto gap-4 border-2 border-red-600 rounded-lg p-4 text-red-600 font-semibold">
-                <span class="flex items-center gap-2"><p class="mr-auto font-extrabold text-red-700">Restaurante</p><a href="#"><img src="/static/assets/icone-editar.svg" alt=""></a> <a href="#"><img src="/static/assets/icone-excluir.svg" alt=""></a></span>
-                <p>Nome: <span>Usuario</span></p>
-                <p>Data: <span>14/05/2024</span></p>
-                <p>Mesa para: <span>Duas pessoas</span></p>
-                <p>Número p/ contato: <span>(81) 98767-0988</span></p>
-                <p>Número da reserva: <span>#198772</span></p>
-            </div>
+            {% endfor %}
         </div>
     </div>
 
@@ -67,14 +48,14 @@
         <p class="text-base mb-2">Acompanhe as redes sociais do Le Bruine:</p>
         <div class="flex items-center justify-center gap-3">
             <a href='https://www.instagram.com/' target="blank" passHref>
-            <div class="cursor-pointer">
-                <img src="assets/instagram-ico.svg" alt="logo instagram" width={24} height={24} />
-            </div>
+                <div class="cursor-pointer">
+                    <img src="assets/instagram-ico.svg" alt="logo instagram" width={24} height={24} />
+                </div>
             </a>
             <a href='https://www.facebook.com/' target="blank" passHref>
-            <div class="cursor-pointer">
-                <img src="assets/facebook-ico.svg"alt="logo facebook" width={24} height={24} />
-            </div>
+                <div class="cursor-pointer">
+                    <img src="assets/facebook-ico.svg" alt="logo facebook" width={24} height={24} />
+                </div>
             </a>
         </div>
         <p class="text-base my-2">Rua Francisco Carraca de Freitas, 270, Boa Vista, Garanhuns-PE</p>

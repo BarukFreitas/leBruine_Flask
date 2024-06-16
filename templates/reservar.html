@@ -6,40 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../static/css/output.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
 </head>
 
 <body class="min-h-screen flex flex-col">
-    <div class="bg-red-600 text-white w-auto h-24 flex items-center justify-between px-20 gap-2"> <!--header-->
-        <a href="/">
+    <div class="bg-red-600 text-white w-auto h-24 flex items-center justify-between px-20 gap-2">
+        <!--header-->
+        <a href="/clienteLogado">
             <div class="flex-shrink-0 cursor-pointer">
-                <img src="../static/assets/le-Bruine-logo.png">
+                <img src="/static/assets/le-Bruine-logo.png">
             </div>
         </a>
-        <div class="flex items-center">
-            <input type="text" placeholder="Busque por restaurante, comida, cidade..."
-                class="w-96 h-12 bg-white text-black text-base px-2 mr-4 rounded-md focus:outline-none"
-                id="searchBar" />
-            <button
-                class="w-16 h-12 bg-red-800 rounded-md cursor-pointer hover:bg-red-900 flex justify-center items-center">
-                <img src="../static/assets/lupa.svg">
-            </button>
+        <div class="flex">
+            <div class="relative inline-block text-left">
+                <div>
+                    <button type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-semibold text-red-600 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                        Menu
+                        <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="z-10 origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" id="dropdown-menu">
+                    <div class="py-1" role="none">
+                        <a href="/perfilUsuario" class="text-red-600 flex items-end gap-2 px-4 py-2 text-sm font-medium hover:bg-slate-100" role="menuitem" tabindex="-1" id="menu-item-0"><img src="/static/assets/minha-conta.svg" alt="">Minha conta</a>
+                        <a href="/minhasReservas" class="text-red-600 flex items-end gap-2 px-4 py-2 text-sm font-medium hover:bg-slate-100" role="menuitem" tabindex="-1" id="menu-item-1"><img src="/static/assets/minhas-reservas.svg" alt="">Minhas reservas</a>
+                        <a href="/logout" class="text-red-600 flex items-end gap-2 px-4 py-2 text-sm font-medium hover:bg-slate-100" role="menuitem" tabindex="-1" id="menu-item-2"><img src="/static/assets/sair.svg" alt="">Sair</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="flex gap-4">
-            <a href="/cadastroEscolher">
-                <div
-                    class=" text-red-600 font-semibold w-auto p-3 h-12 flex justify-center  bg-white rounded-md border-2 cursor-pointer border-transparent hover:text-white hover:bg-red-600 hover:border-white items-center">
-                    Criar conta</div>
-            </a>
-            <a href="/login">
-                <div
-                    class=" text-white font-semibold w-auto p-3 h-12 flex justify-center border-white border-2 cursor-pointer bg-red-600 rounded-md hover:text-red-600 hover:bg-white hover:border-white items-center">
-                    Entrar</div>
-            </a>
-        </div>
-    </div> <!--Fim do header-->
+
+        <script>
+            document.getElementById('menu-button').addEventListener('click', function() {
+                var menu = document.getElementById('dropdown-menu');
+                menu.classList.toggle('hidden');
+            });
+
+            window.addEventListener('click', function(event) {
+                var menuButton = document.getElementById('menu-button');
+                var dropdownMenu = document.getElementById('dropdown-menu');
+                if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                    dropdownMenu.classList.add('hidden');
+                }
+            });
+        </script>
+    </div>
+    <!--Fim do header-->
 
     <div class="ml-8 mt-8">
         <p class="text-3xl text-red-600 font-bold">Restaurante {{ restaurante.nome }}</p>
@@ -48,10 +62,8 @@
             <p class="font-semibold text-red-600 text-lg text-center mb-3">Agendamento de reserva</p>
             <form method="POST" action="{{ url_for('reservar', restaurante_id=restaurante.id) }}">
                 <input type="hidden" name="restaurante_id" value="{{ restaurante.id }}">
-                <input class="w-full bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="date"
-                    name="data_reserva" placeholder="Selecione uma data" required>
-                <input class="w-full bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="time"
-                    name="hora_reserva" placeholder="Escolha o horário" required>
+                <input class="w-full bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="date" name="data_reserva" placeholder="Selecione uma data" required>
+                <input class="w-full bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="time" name="hora_reserva" placeholder="Escolha o horário" required>
                 <div class="flex justify-between">
                     <span class="text-red-600 font-medium text-lg">Mesa para:</span>
                     <select name="tamanho_mesa" id="selecionarMesa" required>
@@ -61,14 +73,12 @@
                         <option value="8">8 pessoas</option>
                     </select>
                 </div>
-                <input class="w-full bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="number"
-                    name="numero_pessoas" placeholder="Número de Pessoas" required>
+                <input class="w-full bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="number" name="numero_pessoas" placeholder="Número de Pessoas" required>
                 <button class="bg-red-600 text-white w-full p-2 rounded-lg mt-4" type="submit">Reservar</button>
             </form>
         </div>
     </div>
-    <img class="absolute float-right top-36 left-96 ml-48"
-        src="../static/assets/bg-compose-reserva.png" alt="">
+    <img class="absolute float-right top-36 left-96 ml-48" src="../static/assets/bg-compose-reserva.png" alt="">
     <div class="flex flex-grow"></div>
 
     <footer class="bg-red-600 mt-7 w-full text-white p-2 flex flex-col items-center">
@@ -86,9 +96,22 @@
             </a>
         </div>
         <p class="text-base my-2">Rua Francisco Carraca de Freitas, 270, Boa Vista, Garanhuns-PE</p>
-        <p class="text-base">Le Bruine © 2024 - Todos os direitos reservados / Desenvolvido por: F.A Soluções
-            Tecnológicas - Yuri Baruk Freitas | Thiago Anízio Miranda</p>
+        <p class="text-base">Le Bruine © 2024 - Todos os direitos reservados / Desenvolvido por: F.A Soluções Tecnológicas - Yuri Baruk Freitas | Thiago Anízio Miranda</p>
     </footer>
+    <script>
+        const mensagem = "{{ mensagem }}";
+        if (mensagem && mensagem !== "") {
+            alert(mensagem);
+        }
+        const mensagem2 = "{{ mensagem2 }}";
+        if (mensagem2 && mensagem2 !== "") {
+            alert(mensagem2);
+        }
+        const mensagem3 = "{{ mensagem3 }}";
+        if (mensagem3 && mensagem3 !== "") {
+            alert(mensagem3);
+        }
+    </script>
 </body>
 
 </html>
