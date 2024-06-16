@@ -83,11 +83,11 @@
     <div class="flex flex-grow flex-wrap items-center justify-center gap-4 mx-6">
         <!-- Restaurantes -->
         {% for restaurante, imagem in restaurantes %}
-        <div id="restaurante-{{ restaurante.id }}" class="w-auto flex gap-4 items-center rounded-2xl hover:bg-slate-100 hover:shadow-lg hover:cursor-pointer p-6">
+        <div id="restaurante-{{ restaurante.id }}" class="w-auto flex gap-4 items-center rounded-2xl hover:bg-slate-100 hover:shadow-lg hover:cursor-pointer p-6 restaurant-item">
             <img class="w-32 h-32 rounded-xl" src="{{ imagem }}" alt="Imagem do Restaurante">
             <div class="w-80">
-                <p class="font-bold text-red-600 text-xl">{{ restaurante.nome }}</p>
-                <p class="font-normal text-gray-400 text-wrap text-sm">{{ restaurante.endereco }}</p>
+                <p class="font-bold text-red-600 text-xl restaurant-name">{{ restaurante.nome }}</p>
+                <p class="font-normal text-gray-400 text-wrap text-sm endereco-restaurante">{{ restaurante.endereco }}</p>
                 <p class="font-bold text-base text-red-600">{{ restaurante.telefone }}</p>
                 <a href="/reservar/{{ restaurante.id }}" class="w-36 bg-red-600 font-semibold text-sm rounded-lg text-white flex flex-row gap-1 h-8 items-center px-2">Fazer reserva<img src="../static/assets/check-button.svg" alt="Check"></a>
             </div>
@@ -112,6 +112,26 @@
         <p class="text-base my-2">Rua Francisco Carraca de Freitas, 270, Boa Vista, Garanhuns-PE</p>
         <p class="text-base">Le Bruine © 2024 - Todos os direitos reservados / Desenvolvido por: F.A Soluções Tecnológicas - Yuri Baruk Freitas | Thiago Anízio Miranda</p>
     </footer>
+
+    <script>
+        function searchRestaurants() {
+            const searchTerm = document.getElementById('searchBar').value.toLowerCase();
+            const restaurants = document.querySelectorAll('.restaurant-item');
+
+            restaurants.forEach(restaurant => {
+                const name = restaurant.querySelector('.restaurant-name').textContent.toLowerCase();
+                const address = restaurant.querySelector('.endereco-restaurante').textContent.toLowerCase();
+
+                if (name.includes(searchTerm) || address.includes(searchTerm)) {
+                    restaurant.style.display = 'flex';
+                } else {
+                    restaurant.style.display = 'none';
+                }
+            });
+        }
+
+        document.getElementById('searchBar').addEventListener('input', searchRestaurants);
+    </script>
 </body>
 
 </html>
