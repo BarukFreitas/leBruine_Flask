@@ -28,28 +28,30 @@
             </button>
         </div>
         <div class="flex gap-4">
-            <a href="cadastro">
-            <div
-                class=" text-red-600 font-semibold w-auto p-3 h-12 flex justify-center  bg-white rounded-md border-2 cursor-pointer border-transparent hover:text-white hover:bg-red-600 hover:border-white items-center">
-                Criar conta</div>
+            <a href="/cadastroEscolher">
+                <div
+                    class=" text-red-600 font-semibold w-auto p-3 h-12 flex justify-center  bg-white rounded-md border-2 cursor-pointer border-transparent hover:text-white hover:bg-red-600 hover:border-white items-center">
+                    Criar conta</div>
             </a>
-            <a href="login">
-            <div
-                class=" text-white font-semibold w-auto p-3 h-12 flex justify-center border-white border-2 cursor-pointer bg-red-600 rounded-md hover:text-red-600 hover:bg-white hover:border-white items-center">
-                Entrar</div>
+            <a href="/login">
+                <div
+                    class=" text-white font-semibold w-auto p-3 h-12 flex justify-center border-white border-2 cursor-pointer bg-red-600 rounded-md hover:text-red-600 hover:bg-white hover:border-white items-center">
+                    Entrar</div>
             </a>
         </div>
     </div> <!--Fim do header-->
 
     <div class="ml-8 mt-8">
-        <p class="text-3xl text-red-600 font-bold">Restaurante Donna Benta</p>
+        <p class="text-3xl text-red-600 font-bold">Restaurante {{ restaurante.nome }}</p>
         <p class="text-red-600 text-lg font-medium">Escolha os detalhes da reserva</p>
         <div class="w-80 h-auto px-6 py-8 mt-6 border-red-600 border-2 rounded-3xl shadow-md">
             <p class="font-semibold text-red-600 text-lg text-center mb-3">Agendamento de reserva</p>
-            <form method="POST" action="/reservar">
-                <input class="w-full bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="date" name="data_reserva" placeholder="Selecione uma data" required>
-                <input class="w-full bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="time" name="hora_reserva" placeholder="Escolha o horário" required>
-                <input class="w-full bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="tel" name="telefone" placeholder="Seu Telefone" required>
+            <form method="POST" action="{{ url_for('reservar', restaurante_id=restaurante.id) }}">
+                <input type="hidden" name="restaurante_id" value="{{ restaurante.id }}">
+                <input class="w-full bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="date"
+                    name="data_reserva" placeholder="Selecione uma data" required>
+                <input class="w-full bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="time"
+                    name="hora_reserva" placeholder="Escolha o horário" required>
                 <div class="flex justify-between">
                     <span class="text-red-600 font-medium text-lg">Mesa para:</span>
                     <select name="tamanho_mesa" id="selecionarMesa" required>
@@ -59,30 +61,33 @@
                         <option value="8">8 pessoas</option>
                     </select>
                 </div>
-                <input class="w-full bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="number" name="numero_pessoas" placeholder="Número de Pessoas" required>
+                <input class="w-full bg-gray-200 border-red-600 p-3 mb-5 rounded-lg outline-none" type="number"
+                    name="numero_pessoas" placeholder="Número de Pessoas" required>
                 <button class="bg-red-600 text-white w-full p-2 rounded-lg mt-4" type="submit">Reservar</button>
             </form>
         </div>
     </div>
-    <img class="absolute float-right top-36 left-96 ml-48" src="assets/bg-compose-reserva.png" alt="">
+    <img class="absolute float-right top-36 left-96 ml-48"
+        src="../static/assets/bg-compose-reserva.png" alt="">
     <div class="flex flex-grow"></div>
 
     <footer class="bg-red-600 mt-7 w-full text-white p-2 flex flex-col items-center">
         <p class="text-base mb-2">Acompanhe as redes sociais do Le Bruine:</p>
         <div class="flex items-center justify-center gap-3">
             <a href='https://www.instagram.com/' target="blank" passHref>
-            <div class="cursor-pointer">
-                <img src="../static/assets/instagram-ico.svg" alt="logo instagram" width={24} height={24} />
-            </div>
+                <div class="cursor-pointer">
+                    <img src="../static/assets/instagram-ico.svg" alt="logo instagram" width={24} height={24} />
+                </div>
             </a>
             <a href='https://www.facebook.com/' target="blank" passHref>
-            <div class="cursor-pointer">
-                <img src="../static/assets/facebook-ico.svg"alt="logo facebook" width={24} height={24} />
-            </div>
+                <div class="cursor-pointer">
+                    <img src="../static/assets/facebook-ico.svg" alt="logo facebook" width={24} height={24} />
+                </div>
             </a>
         </div>
         <p class="text-base my-2">Rua Francisco Carraca de Freitas, 270, Boa Vista, Garanhuns-PE</p>
-        <p class="text-base">Le Bruine © 2024 - Todos os direitos reservados / Desenvolvido por: F.A Soluções Tecnológicas - Yuri Baruk Freitas | Thiago Anízio Miranda</p>
+        <p class="text-base">Le Bruine © 2024 - Todos os direitos reservados / Desenvolvido por: F.A Soluções
+            Tecnológicas - Yuri Baruk Freitas | Thiago Anízio Miranda</p>
     </footer>
 </body>
 

@@ -4,28 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="/static/css/output.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    <link href="../static/css/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
 </head>
 
 <body class="min-h-screen flex flex-col">
     <div class="bg-red-600 text-white w-auto h-24 flex items-center justify-between px-20 gap-2">
         <!--header-->
-        <a>
+        <a href="/">
             <div class="flex-shrink-0 cursor-pointer">
-                <img src="/static/assets/le-Bruine-logo.png">
+                <img src="../static/assets/le-Bruine-logo.png">
             </div>
         </a>
         <div class="flex items-center">
             <input type="text" placeholder="Busque por restaurante, comida, cidade..."
-                class="w-96 h-12 bg-white text-black text-base px-2 mr-4 rounded-md focus:outline-none"
-                id="searchBar" />
+                class="w-96 h-12 bg-white text-black text-base px-2 mr-4 rounded-md focus:outline-none" id="searchBar" />
             <button
                 class="w-16 h-12 bg-red-800 rounded-md cursor-pointer hover:bg-red-900 flex justify-center items-center">
-                <img src="/static/assets/lupa.svg">
+                <img src="../static/assets/lupa.svg">
             </button>
         </div>
         <div class="flex gap-4">
@@ -46,7 +44,7 @@
         <!--Carrossel-->
         <a href="#">
             <div class="relative w-80 h-52 rounded-lg overflow-hidden m-2">
-                <img src="/static/assets/hamburger.png" />
+                <img src="../static/assets/hamburger.png" />
                 <div
                     class="absolute inset-0 flex items-center justify-center text-white text-2xl font-bold bg-black bg-opacity-70 hover:bg-opacity-20">
                     <span>Hamburger</span>
@@ -55,7 +53,7 @@
         </a>
         <a href="#">
             <div class="relative w-80 h-52 rounded-lg overflow-hidden m-2">
-                <img src="/static/assets/sushi.png" />
+                <img src="../static/assets/sushi.png" />
                 <div
                     class="absolute inset-0 flex items-center justify-center text-white text-2xl font-bold bg-black bg-opacity-70 hover:bg-opacity-20">
                     <span>Sushi</span>
@@ -64,7 +62,7 @@
         </a>
         <a href="#">
             <div class="relative w-80 h-52 rounded-lg overflow-hidden m-2">
-                <img src="/static/assets/massas.png" />
+                <img src="../static/assets/massas.png" />
                 <div
                     class="absolute inset-0 flex items-center justify-center text-white text-2xl font-bold bg-black bg-opacity-70 hover:bg-opacity-20">
                     <span>Massas</span>
@@ -73,7 +71,7 @@
         </a>
         <a href="#">
             <div class="relative w-80 h-52 rounded-lg overflow-hidden m-2">
-                <img src="/static/assets/pizza.png" />
+                <img src="../static/assets/pizza.png" />
                 <div
                     class="absolute inset-0 flex items-center justify-center text-white text-2xl font-bold bg-black bg-opacity-70 hover:bg-opacity-20">
                     <span>Pizza</span>
@@ -85,13 +83,13 @@
     <div class="flex flex-grow flex-wrap items-center justify-center gap-4 mx-6">
         <!-- Restaurantes -->
         {% for restaurante, imagem in restaurantes %}
-        <div id="restaurante" class="w-auto flex gap-4 items-center rounded-2xl hover:bg-slate-100 hover:shadow-lg hover:cursor-pointer p-6">
+        <div id="restaurante-{{ restaurante.id }}" class="w-auto flex gap-4 items-center rounded-2xl hover:bg-slate-100 hover:shadow-lg hover:cursor-pointer p-6">
             <img class="w-32 h-32 rounded-xl" src="{{ imagem }}" alt="Imagem do Restaurante">
             <div class="w-80">
                 <p class="font-bold text-red-600 text-xl">{{ restaurante.nome }}</p>
                 <p class="font-normal text-gray-400 text-wrap text-sm">{{ restaurante.endereco }}</p>
                 <p class="font-bold text-base text-red-600">{{ restaurante.telefone }}</p>
-                <a href="/reservar" class="w-36 bg-red-600 font-semibold text-sm rounded-lg text-white flex flex-row gap-1 h-8 items-center px-2">Fazer reserva<img src="/static/assets/check-button.svg" alt="Check"></a>
+                <a href="/reservar/{{ restaurante.id }}" class="w-36 bg-red-600 font-semibold text-sm rounded-lg text-white flex flex-row gap-1 h-8 items-center px-2">Fazer reserva<img src="../static/assets/check-button.svg" alt="Check"></a>
             </div>
         </div>
         {% endfor %}
@@ -102,12 +100,12 @@
         <div class="flex items-center justify-center gap-3">
             <a href='https://www.instagram.com/' target="blank" passHref>
                 <div class="cursor-pointer">
-                    <img src="/static/assets/instagram-ico.svg" alt="logo instagram" width={24} height={24} />
+                    <img src="../static/assets/instagram-ico.svg" alt="logo instagram" width="24" height="24" />
                 </div>
             </a>
             <a href='https://www.facebook.com/' target="blank" passHref>
                 <div class="cursor-pointer">
-                    <img src="/static/assets/facebook-ico.svg" alt="logo facebook" width={24} height={24} />
+                    <img src="../static/assets/facebook-ico.svg" alt="logo facebook" width="24" height="24" />
                 </div>
             </a>
         </div>

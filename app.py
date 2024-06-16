@@ -45,6 +45,8 @@ class Reserva(db.Model):
     cliente = db.relationship('Cliente', backref=db.backref('reservas', lazy=True))
     restaurante = db.relationship('Restaurante', backref=db.backref('reservas', lazy=True))
 
+import random
+
 @app.route("/")
 def index():
     restaurantes = Restaurante.query.all()
@@ -67,6 +69,14 @@ def index():
     for restaurante in restaurantes:
         imagem_aleatoria = random.choice(imagens)  # Escolhe uma imagem aleatória
         restaurantes_com_imagens.append((restaurante, imagem_aleatoria))
+    
+    random.shuffle(restaurantes_com_imagens)  # Embaralha a lista de restaurantes
+
+    return render_template("index.html", restaurantes=restaurantes_com_imagens)
+
+
+    return render_template("index.html", restaurantes=restaurantes_com_imagens)
+
     
     return render_template("index.html", restaurantes=restaurantes_com_imagens)
 @app.route('/cadastrar_cliente', methods=['GET', 'POST'])
@@ -153,18 +163,22 @@ def logout():
 
 @app.route("/reservaConcluida/<int:reserva_id>")
 def reservaConcluida(reserva_id):
+    print(f'Reserva concluída com id {reserva_id}')
     reserva = Reserva.query.get_or_404(reserva_id)
-    return render_template("reservaConcluida.html", reserva=reserva)
+    return render_template('reserva_concluida.html', reserva=reserva)
 
-@app.route("/reservar", methods=['GET', 'POST'])
-def reservar():
+@app.route("/reservar/<int:restaurante_id>", methods=['GET', 'POST'])
+def reservar(restaurante_id):
+    print('Entrou na rota de reservar')
     if 'cliente_id' not in session:
         flash('Você precisa estar logado para fazer uma reserva.', 'danger')
         return redirect(url_for('login'))
 
+    restaurante = Restaurante.query.get_or_404(restaurante_id)
+
     if request.method == 'POST':
+        print('Recebido um POST')
         cliente_id = session['cliente_id']
-        restaurante_id = 1  # Aqui você deve definir o restaurante correto
         data_reserva_str = request.form['data_reserva']
         hora_reserva_str = request.form['hora_reserva']
         data_hora_reserva_str = f"{data_reserva_str} {hora_reserva_str}"
@@ -172,9 +186,12 @@ def reservar():
         tamanho_mesa = request.form['tamanho_mesa']
         numero_pessoas = request.form['numero_pessoas']
 
+        print(f'Data e hora da reserva: {data_reserva}')
+        print(f'Tamanho da mesa: {tamanho_mesa}')
+        print(f'Número de pessoas: {numero_pessoas}')
+
         cliente = Cliente.query.get(cliente_id)
-        restaurante = Restaurante.query.get(restaurante_id)
-        if cliente is None or restaurante is None:
+        if cliente is None:
             flash('Erro ao fazer reserva. Tente novamente mais tarde.', 'danger')
             return redirect(url_for('index'))
 
@@ -190,14 +207,20 @@ def reservar():
         try:
             db.session.add(nova_reserva)
             db.session.commit()
+            print('Nova reserva realizada com sucesso')
             return redirect(url_for('reservaConcluida', reserva_id=nova_reserva.id))
         except Exception as e:
             db.session.rollback()
             app.logger.error(f'Error: {str(e)}')
             flash(f'Erro ao fazer reserva: {str(e)}', 'danger')
+            print(f'Erro ao fazer reserva: {str(e)}')
             return redirect(url_for('index'))
 
-    return render_template("reservar.html")
+    return render_template("reservar.html", restaurante=restaurante)
+
+
+
+
 
 @app.route('/dashboard')
 def dashboard():
