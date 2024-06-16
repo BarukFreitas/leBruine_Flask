@@ -153,6 +153,7 @@ def init_routes(app):
 
         return render_template("login.html")
 
+
     # Rota para logout
     @app.route("/logout")
     def logout():
