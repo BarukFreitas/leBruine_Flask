@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from config import Config
 from datetime import datetime
 from flask_migrate import Migrate
+import random
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -20,7 +21,6 @@ class Cliente(db.Model):
     email = db.Column(db.String(255), nullable=False, unique=True)
     telefone = db.Column(db.String(255), nullable=False)
     senha = db.Column(db.String(255), nullable=False)
-
 
 class Restaurante(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -40,16 +40,35 @@ class Reserva(db.Model):
     tamanho_mesa = db.Column(db.Integer, nullable=False)
     numero_pessoas = db.Column(db.Integer, nullable=False)
     nome_cliente = db.Column(db.String(255), nullable=False)
-    nome_restaurante = db.Column(db.String(255), nullable=False) 
+    nome_restaurante = db.Column(db.String(255), nullable=False)
 
     cliente = db.relationship('Cliente', backref=db.backref('reservas', lazy=True))
     restaurante = db.relationship('Restaurante', backref=db.backref('reservas', lazy=True))
 
-
 @app.route("/")
 def index():
-    return render_template("index.html")
+    restaurantes = Restaurante.query.all()
+    imagens = [
+        "/static/assets/cheiro-verde.png",
+        "/static/assets/donna-benta.png",
+        "/static/assets/feijao-verde.png",
+        "/static/assets/panela-de-barro.png",
+        "/static/assets/restaurante1.png",
+        "/static/assets/restaurante2.png",
+        "/static/assets/restaurante3.png",
+        "/static/assets/restaurante4.png",
+        "/static/assets/restaurante5.png",
+        "/static/assets/restaurante6.png",
+        "/static/assets/restaurante7.png"
+    ]
+    random.shuffle(imagens)  # Embaralha a lista de imagens
 
+    restaurantes_com_imagens = []
+    for restaurante in restaurantes:
+        imagem_aleatoria = random.choice(imagens)  # Escolhe uma imagem aleatória
+        restaurantes_com_imagens.append((restaurante, imagem_aleatoria))
+    
+    return render_template("index.html", restaurantes=restaurantes_com_imagens)
 @app.route('/cadastrar_cliente', methods=['GET', 'POST'])
 def cadastrar_cliente():
     if request.method == 'POST':
@@ -57,7 +76,7 @@ def cadastrar_cliente():
         email = request.form['email']
         telefone = request.form['telefone']
         senha = request.form['senha']
-        
+
         novo_cliente = Cliente(
             nome=nome,
             email=email,
@@ -69,14 +88,11 @@ def cadastrar_cliente():
             db.session.commit()
             flash('Cadastro realizado com sucesso!', 'success')
             return redirect(url_for('index'))
-            print('deu certo')
         except Exception as e:
             db.session.rollback()  # Rollback the transaction if there's an error
-            print('erro no db session rollback')
             app.logger.error(f'Error: {str(e)}')  # Log the error
-            print(f'Error: {str(e)}')
             flash(f'Erro ao cadastrar: {str(e)}', 'danger')
-    
+
     return render_template('cadastrar_cliente.html')
 
 @app.route("/cadastroEmpresa", methods=['GET', 'POST'])
@@ -106,6 +122,8 @@ def cadastroEmpresa():
             flash('Restaurante cadastrado com sucesso!', 'success')
             return redirect(url_for('index'))
         except Exception as e:
+            db.session.rollback()
+            app.logger.error(f'Error: {str(e)}')
             flash(f'Erro ao cadastrar: {str(e)}', 'danger')
 
     return render_template('cadastroEmpresa.html')
@@ -124,7 +142,7 @@ def login():
             return redirect(url_for('index'))
         else:
             flash('Email ou senha incorretos.', 'danger')
-    
+
     return render_template("login.html")
 
 @app.route("/logout")
@@ -169,10 +187,15 @@ def reservar():
             nome_cliente=cliente.nome,
             nome_restaurante=restaurante.nome
         )
-        db.session.add(nova_reserva)
-        db.session.commit()
-
-        return redirect(url_for('reservaConcluida', reserva_id=nova_reserva.id))
+        try:
+            db.session.add(nova_reserva)
+            db.session.commit()
+            return redirect(url_for('reservaConcluida', reserva_id=nova_reserva.id))
+        except Exception as e:
+            db.session.rollback()
+            app.logger.error(f'Error: {str(e)}')
+            flash(f'Erro ao fazer reserva: {str(e)}', 'danger')
+            return redirect(url_for('index'))
 
     return render_template("reservar.html")
 
