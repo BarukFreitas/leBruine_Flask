@@ -1,77 +1,88 @@
+<!-- minhasReservas.html -->
+
 <!doctype html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../static/css/output.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
-
 <body class="min-h-screen flex flex-col">
-    <div class="bg-red-600 text-white w-auto h-24 flex items-center justify-between px-20 gap-2"> <!--header-->
-        <a href="/">
+    <!-- Header -->
+    <div class="bg-red-600 text-white w-auto h-24 flex items-center justify-between px-20 gap-2">
+        <a href="/clienteLogado">
             <div class="flex-shrink-0 cursor-pointer">
                 <img src="/static/assets/le-Bruine-logo.png">
             </div>
         </a>
-        <div class="flex items-center">
-            <input type="text" placeholder="Busque por restaurante, comida, cidade..."
-                class="w-96 h-12 bg-white text-black text-base px-2 mr-4 rounded-md focus:outline-none"
-                id="searchBar" />
-            <button
-                class="w-16 h-12 bg-red-800 rounded-md cursor-pointer hover:bg-red-900 flex justify-center items-center">
-                <img src="/static/assets/lupa.svg">
-            </button>
-        </div>
-        <div class="flex gap-4">
-            <a href="/cadastro">
-            <div
-                class=" text-red-600 font-semibold w-auto p-3 h-12 flex justify-center  bg-white rounded-md border-2 cursor-pointer border-transparent hover:text-white hover:bg-red-600 hover:border-white items-center">
-                Criar conta</div>
-            </a>
-            <a href="/login">
-            <div
-                class=" text-white font-semibold w-auto p-3 h-12 flex justify-center border-white border-2 cursor-pointer bg-red-600 rounded-md hover:text-red-600 hover:bg-white hover:border-white items-center">
-                Entrar</div>
-            </a>
-        </div>
-    </div> <!--Fim do header-->
 
-    <div class="w-full h-full flex flex-grow flex-col">
-        <p class="font-extrabold text-red-600 text-4xl mb-4 mt-4 px-6">Suas reservas</p>
-        <div class="w-full h-full flex flex-row gap-4 px-6">
-            <div class="w-auto h-auto px-6 py-4 border-solid border-2 rounded-2xl border-red-600 gap-2">
-                <p class="font-medium text-red-600 text-lg">Nome: <span class="font-medium text-red-600 text-lg">usuário</span></p>
-                <p class="font-medium text-red-600 text-lg">Data: <span class="font-medium text-red-600 text-lg">14/05/2024</span></p>
-                <p class="font-medium text-red-600 text-lg">Mesa para: <span class="font-medium text-red-600 text-lg">2 pessoas</span></p>
-                <p class="font-medium text-red-600 text-lg">Número para contato: <span class="font-medium text-red-600 text-lg">(81)98767-0988</span></p>
-                <p class="font-medium text-red-600 text-lg">Número da reserva: <span class="font-medium text-red-600 text-lg">#198772</span></p>
-                <div class="w-full flex justify-center items-center gap-2 mt-4">
-                    <button class="bg-white text-red-600 border border-solid rounded-lg border-red-600 p-2">Editar</button>
-                    <button class="bg-red-600 border-2 text-white p-2 rounded-lg">Cancelar</button>
+        <div class="flex">
+            <div class="relative inline-block text-left">
+                <div>
+                    <button type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-semibold text-red-600 hover:bg-gray-50" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                        Menu
+                        <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+        
+                <!-- Dropdown menu, show/hide based on menu state. -->
+                <div class="z-10 origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" id="dropdown-menu">
+                    <div class="py-1" role="none">
+                        <!-- Active: "bg-gray-100", Not Active: "" -->
+                        <a href="#" class="text-red-600 flex items-end gap-2 px-4 py-2 text-sm font-medium hover:bg-slate-100" role="menuitem" tabindex="-1" id="menu-item-0"><img src="assets/minha-conta.svg" alt="">Minha conta</a>
+                        <a href="/minhasReservas" class="text-red-600 flex items-end gap-2 px-4 py-2 text-sm font-medium hover:bg-slate-100" role="menuitem" tabindex="-1" id="menu-item-1"><img src="assets/minhas-reservas.svg" alt="">Minhas reservas</a>
+                        <a href="/" class="text-red-600 flex items-end gap-2 px-4 py-2 text-sm font-medium hover:bg-slate-100" role="menuitem" tabindex="-1" id="menu-item-2"><img src="assets/sair.svg" alt="">Sair</a>
+                    </div>
                 </div>
             </div>
+        </div>
+
+        <script>
+            document.getElementById('menu-button').addEventListener('click', function() {
+                var menu = document.getElementById('dropdown-menu');
+                menu.classList.toggle('hidden');
+            });
+    
+            // Optionally close the dropdown when clicking outside of it
+            window.addEventListener('click', function(event) {
+                var menuButton = document.getElementById('menu-button');
+                var dropdownMenu = document.getElementById('dropdown-menu');
+                if (!menuButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                    dropdownMenu.classList.add('hidden');
+                }
+            });
+        </script>
+    </div>
+
+    <!-- Suas reservas -->
+    <div class="w-full h-screen flex flex-1 flex-col px-6">
+        <p class="font-extrabold text-red-600 text-4xl mb-4 mt-4 px-6">Suas reservas</p>
+        
+        <!-- Iteração sobre as reservas -->
+        <div class="flex flex-wrap gap-4">
+            {% for reserva in reservas %}
             <div class="w-auto h-auto px-6 py-4 border-solid border-2 rounded-2xl border-red-600 gap-2">
-                <p class="font-medium text-red-600 text-lg">Nome: <span class="font-medium text-red-600 text-lg">usuário</span></p>
-                <p class="font-medium text-red-600 text-lg">Data: <span class="font-medium text-red-600 text-lg">14/05/2024</span></p>
-                <p class="font-medium text-red-600 text-lg">Mesa para: <span class="font-medium text-red-600 text-lg">2 pessoas</span></p>
-                <p class="font-medium text-red-600 text-lg">Número para contato: <span class="font-medium text-red-600 text-lg">(81)98767-0988</span></p>
-                <p class="font-medium text-red-600 text-lg">Número da reserva: <span class="font-medium text-red-600 text-lg">#198772</span></p>
+                <div>
+                    <p class="font-medium text-red-600 text-lg">Nome: <span class="font-medium text-red-600 text-lg">{{ reserva.nome_cliente }}</span></p>
+                    <p class="font-medium text-red-600 text-lg">Data: <span class="font-medium text-red-600 text-lg">{{ reserva.data_reserva.strftime('%d/%m/%Y') }}</span></p>
+                    <p class="font-medium text-red-600 text-lg">Mesa para: <span class="font-medium text-red-600 text-lg">{{ reserva.numero_pessoas }} pessoa(s)</span></p>
+                    <p class="font-medium text-red-600 text-lg">Número para contato: <span class="font-medium text-red-600 text-lg">{{ cliente.telefone }}</span></p>
+                    <p class="font-medium text-red-600 text-lg">Número da reserva: <span class="font-medium text-red-600 text-lg">#{{ reserva.id }}</span></p>
+                    <div class="flex justify-center items-center gap-2 mt-4">
+                        <button class="bg-white text-red-600 border border-solid rounded-lg border-red-600 p-2">Editar</button>
+                        <button class="bg-red-600 border-2 text-white p-2 rounded-lg">Cancelar</button>
+                    </div>
+                </div>
             </div>
-            <div class="w-auto h-auto px-6 py-4 border-solid border-2 rounded-2xl border-red-600 gap-2">
-                <p class="font-medium text-red-600 text-lg">Nome: <span class="font-medium text-red-600 text-lg">usuário</span></p>
-                <p class="font-medium text-red-600 text-lg">Data: <span class="font-medium text-red-600 text-lg">14/05/2024</span></p>
-                <p class="font-medium text-red-600 text-lg">Mesa para: <span class="font-medium text-red-600 text-lg">2 pessoas</span></p>
-                <p class="font-medium text-red-600 text-lg">Número para contato: <span class="font-medium text-red-600 text-lg">(81)98767-0988</span></p>
-                <p class="font-medium text-red-600 text-lg">Número da reserva: <span class="font-medium text-red-600 text-lg">#198772</span></p>
-            </div>
+            {% endfor %}
         </div>
     </div>
 
+    <!-- Footer -->
     <footer class="bg-red-600 mt-7 w-full text-white p-2 flex flex-col items-center">
         <p class="text-base mb-2">Acompanhe as redes sociais do Le Bruine:</p>
         <div class="flex items-center justify-center gap-3">
@@ -87,8 +98,4 @@
             </a>
         </div>
         <p class="text-base my-2">Rua Francisco Carraca de Freitas, 270, Boa Vista, Garanhuns-PE</p>
-        <p class="text-base">Le Bruine © 2024 - Todos os direitos reservados / Desenvolvido por: F.A Soluções Tecnológicas - Yuri Baruk Freitas | Thiago Anízio Miranda</p>
-    </footer>
-</body>
-
-</html>
+        <p class="text-base">Le Bruine © 2024
