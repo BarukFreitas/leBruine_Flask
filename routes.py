@@ -153,7 +153,7 @@ def init_routes(app):
                 db.session.add(novo_cliente)
                 db.session.commit()
                 mensagem = 'Cadastro realizado com sucesso!'
-                return redirect(url_for('index'))
+                return redirect(url_for('cadastroConcluido'))
             except Exception as e:
                 db.session.rollback()
                 mensagem2 = f'Erro ao cadastrar: {str(e)}'
@@ -295,7 +295,7 @@ def init_routes(app):
                 db.session.add(novo_restaurante)
                 db.session.commit()
                 mensagem = ('Restaurante cadastrado com sucesso!')
-                return redirect(url_for('index'))
+                return redirect(url_for('cadastroConcluido'))
             except Exception as e:
                 db.session.rollback()
                 mensagem2 = (f'Erro ao cadastrar: {str(e)}')
