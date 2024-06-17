@@ -96,7 +96,7 @@ def init_routes(app):
                 return render_template('perfilUsuario.html', cliente=cliente)
         mensagem = 'Você precisa estar logado para acessar essa página!'
         return redirect(url_for('login'), mensagem=mensagem)
-
+    
     @app.route('/clienteLogado')
     def cliente_logado():
         mensagem = ''
@@ -160,29 +160,39 @@ def init_routes(app):
 
         return render_template('cadastrar_cliente.html', mensagem=mensagem, mensagem2=mensagem2)
     
+    # Login route
     @app.route("/login", methods=['GET', 'POST'])
     def login():
-        mensagem = ''
-        mensagem2 = ''
-
         if request.method == 'POST':
             email = request.form['email']
             senha = request.form['senha']
+            return login(email, senha)
 
-            cliente = Cliente.query.filter_by(email=email).first()
+        return render_template("login.html")
+    
 
-            if cliente and cliente.senha == senha:
-                session['cliente_id'] = cliente.id
-                mensagem = 'Login realizado com sucesso!'
-                return redirect(url_for('cliente_logado'))
-            else:
-                mensagem2 = 'Email ou senha incorreto, tente novamente!'
+    # Common login function
+    def login(email, senha):
+        cliente = Cliente.query.filter_by(email=email).first()
+        restaurante = Restaurante.query.filter_by(email=email).first()
 
-        return render_template("login.html", mensagem=mensagem, mensagem2=mensagem2)
+        if cliente and cliente.senha == senha:
+            session['cliente_id'] = cliente.id
+            return redirect(url_for('cliente_logado'))
 
+        elif restaurante and restaurante.senha_hash == senha:
+            session['restaurante_id'] = restaurante.id
+            return redirect(url_for('perfilRestaurante'))
+
+        else:
+            flash('Email ou senha incorreto, tente novamente!', 'danger')
+            return redirect(url_for('login'))
+
+    # Logout route
     @app.route("/logout")
     def logout():
         session.pop('cliente_id', None)
+        session.pop('restaurante_id', None)
         flash('Você saiu da sessão', 'info')
         return redirect(url_for('index'))
     
@@ -244,8 +254,18 @@ def init_routes(app):
 
         return render_template("reservar.html", restaurante=restaurante, mensagem=mensagem, mensagem2=mensagem2, mensagem3=mensagem3)
 
-
     #rotas da empresa
+
+    @app.route('/excluirReserva/<int:reserva_id>', methods=['POST'])
+    def excluir_reserva_cliente(reserva_id):
+        if 'cliente_id' in session:
+            reserva = Reserva.query.get_or_404(reserva_id)
+            db.session.delete(reserva)
+            db.session.commit()
+            return redirect(url_for('minhasReservas'))
+
+        return redirect(url_for('login'))
+
 
     @app.route("/cadastroEmpresa", methods=['GET', 'POST'])
     def cadastroEmpresa():
@@ -303,7 +323,53 @@ def init_routes(app):
     def gerenciarRestaurantes():
         return render_template('gerenciarRestaurantes.html')
 
+
     @app.route('/homeRestaurante')
     def homeRestaurante():
-        return render_template('homeRestaurante.html')
+        mensagem = ''
+        reservas = []
+
+        if 'restaurante_id' in session:
+            restaurante_id = session['restaurante_id']
+            restaurante = Restaurante.query.get(restaurante_id)
+
+            if restaurante:
+                # Filtrando reservas apenas para o restaurante logado
+                reservas = Reserva.query.filter_by(restaurante_id=restaurante_id).all()
+
+                # Excluir reservas passadas do banco de dados
+                reservas_passadas = [reserva for reserva in reservas if reserva.data_reserva < datetime.now()]
+                for reserva in reservas_passadas:
+                    db.session.delete(reserva)
+                    db.session.commit()
+
+                # Filtrar novamente para obter apenas as reservas futuras
+                reservas = [reserva for reserva in reservas if reserva.data_reserva >= datetime.now()]
+            else:
+                mensagem = 'Restaurante não encontrado'
+        
+        return render_template('homeRestaurante.html', restaurante=restaurante, reservas=reservas, mensagem=mensagem)
+    
+    @app.route('/perfilRestaurante')
+    def perfilRestaurante():
+        mensagem = ''
+        restaurante = None
+
+        if 'restaurante_id' in session:
+            restaurante_id = session['restaurante_id']
+            restaurante = Restaurante.query.get(restaurante_id)
+
+        if restaurante:
+            return render_template('perfilRestaurante.html', restaurante=restaurante)
+        else:
+            mensagem = 'Restaurante não encontrado'
+        
+        return render_template('perfilRestaurante.html', mensagem=mensagem)
+    
+    @app.route('/cadastroConcluido')
+    def cadastroConcluido():
+        return render_template('cadastroConcluido.html')
+    
+
+    
 

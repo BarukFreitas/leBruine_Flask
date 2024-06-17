@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/static/css/output.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
 </head>
 
@@ -15,15 +16,15 @@
     <div class="flex flex-col flex-1">
         <div class="flex flex-1">
             <!-- Menu lateral -->
-            <div class="max-h-screen w-80 bg-red-600 items-center flex flex-col py-4">
+            <div class="max-h-screen-screen w-80 bg-red-600 items-center flex flex-col py-4">
                 <img src="/static/assets/le-Bruine-logo.png" alt="">
                 <div class="w-full h-10 px-2 my-4">
                     <input class="bg-white w-full h-full px-4 outline-none rounded-lg" type="text"
                         placeholder="Buscar reservas">
                 </div>
-                <a class="w-full h-11 bg-red-900 flex justify-start items-center px-4 text-white"
-                    href="#">Gerenciar reservas</a>
                 <a class="w-full h-11 bg-red-600 flex justify-start items-center px-4 text-white  hover:bg-red-900"
+                    href="/homeRestaurante">Gerenciar reservas</a>
+                <a class="w-full h-11 bg-red-900 flex justify-start items-center px-4 text-white"
                     href="/perfilRestaurante">Perfil</a>
                 <a class="w-full h-auto px-4 flex justify-start items-center m-2" href="/logout">
                     <button class="w-14 h-8 bg-white text-red-600 rounded-md font-medium">Sair</button>
@@ -31,21 +32,28 @@
             </div>
             <!-- Fim menu lateral -->
 
-            <div class="w-full h-full flex flex-col py-8">
+            <div class="w-full h-full flex flex-col justify-center items-center">
                 <p class="font-extrabold text-red-600 text-4xl mb-4 mt-4 px-6 text-center">Bem-Vindo, <span>{{ restaurante.nome }}</span></p>
-                <div class="w-screen h-auto flex flex-row flex-wrap gap-4 px-6">
-                    {% for reserva in reservas %}
-                    <div class="w-96 h-auto gap-4 border-2 border-red-600 rounded-lg p-4 text-red-600 font-semibold">
-                        <span class="flex items-center gap-2">
-                            <p class="mr-auto font-extrabold text-red-700">Reserva #{{ reserva.id }}</p>
-                        </span>
-                        <p>Nome: <span>{{ reserva.cliente.nome }}</span></p>
-                        <p>Data: <span>{{ reserva.data_reserva.strftime('%d/%m/%Y') }}</span></p>
-                        <p>Mesa para: <span>{{ reserva.tamanho_mesa }}</span></p>
-                        <p>Número p/ contato: <span>{{ reserva.cliente.telefone }}</span></p>
-                        <p>Número da reserva: <span>#{{ reserva.id }}</span></p>
+                <div class="w-1/3 h-auto flex flex-col gap-4 px-6 justify-center items-center shadow-lg">
+                    <img src="/static/assets/perfil-restaurante.png" alt="">
+                    <div class="my-4">
+                        <p class="flex flex-col font-medium text-base"><span
+                                class="text-gray-500 text-sm">Nome do restaurante</span>{{ restaurante.nome }}</p>
+                        <p class="flex flex-col font-medium text-base"><span
+                                class="text-gray-500 text-sm">Segmento</span>{{ restaurante.segmento }}</p>
+                        <p class="flex flex-col font-medium text-base"><span
+                                class="text-gray-500 text-sm">Endereço</span>{{ restaurante.endereco }}</p>
+                        <p class="flex flex-col font-medium text-base"><span
+                                class="text-gray-500 text-sm">Telefone</span>{{ restaurante.telefone }}</p>
                     </div>
-                    {% endfor %}
+                    <div class="flex flex-col w-96 gap-4 px-4">
+                        <button
+                            class="flex h-10 items-center border-2 border-red-600 bg-white rounded-md text-red-600 w-full px-2 justify-center gap-2"><img
+                                src="/static/assets/editar-dados.svg" alt="">Editar dados</button>
+                        <button
+                            class="flex h-10 items-center bg-red-600 rounded-md text-white w-full px-2 justify-center gap-2"><img
+                                src="/static/assets/deletar-conta.svg" alt="">Excluir conta</button>
+                    </div>
                 </div>
             </div>
 
@@ -69,8 +77,6 @@
             <p class="text-base">Le Bruine © 2024 - Todos os direitos reservados / Desenvolvido por: F.A Soluções
                 Tecnológicas - Yuri Baruk Freitas | Thiago Anízio Miranda</p>
         </footer>
-    </div>
-
 </body>
 
 </html>
